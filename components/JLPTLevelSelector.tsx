@@ -2,6 +2,7 @@ import { useGameStore } from "@/stores/gameStore";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import type { JLPTLevel } from "@/lib/types";
+import { JLPTColor } from "@/lib/utils";
 
 const JLPTLevels = [
   { id: "N5", label: "N5" },
@@ -39,29 +40,47 @@ export default function JLPTLevelSelector() {
       <div className="flex items-center justify-between">
         <h3 className="font-medium">JLPT Level</h3>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => toggleAllLevels(true)}>
+          <Button
+            variant="outline"
+            size="xs"
+            onClick={() => toggleAllLevels(true)}
+          >
             Select All
           </Button>
-          <Button variant="outline" size="sm" onClick={() => toggleAllLevels(false)}>
+          <Button
+            variant="outline"
+            size="xs"
+            onClick={() => toggleAllLevels(false)}
+          >
             Clear
           </Button>
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
-        {JLPTLevels.map((level) => (
-          <Toggle
-            key={level.id}
-            variant="outline"
-            pressed={enabledJLPTLevels.includes(level.id as JLPTLevel)}
-            onClick={() => toggleLevel(level.id as JLPTLevel)}
-          >
-            {level.label}
-          </Toggle>
-        ))}
+        {JLPTLevels.map((level) => {
+          const isActive = enabledJLPTLevels.includes(level.id as JLPTLevel);
+
+          return (
+            <Toggle
+              key={level.id}
+              size="sm"
+              variant="outline"
+              className={
+                isActive ? JLPTColor(level.id as JLPTLevel) : "bg-transparent"
+              }
+              pressed={isActive}
+              onClick={() => toggleLevel(level.id as JLPTLevel)}
+            >
+              {level.label}
+            </Toggle>
+          );
+        })}
       </div>
       <div className="mt-1 text-xs">
         {enabledJLPTLevels.length} of {JLPTLevels.length} selected
-        <span className="ml-2 italic">(Note: Only N5 is currently available)</span>
+        <span className="ml-2 italic">
+          (Note: Only N5 is currently available)
+        </span>
       </div>
     </div>
   );

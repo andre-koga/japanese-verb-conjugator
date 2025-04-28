@@ -19,8 +19,8 @@ export function LightSwitch() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          <Sun className="dark:hidden" />
-          <Moon className="absolute hidden dark:block" />
+          <Sun className="block dark:hidden" />
+          <Moon className="hidden dark:block" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>

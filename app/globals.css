@@ -40,6 +40,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --color-n5: var(--n5-color);
+  --color-n4: var(--n4-color);
+  --color-n3: var(--n3-color);
+  --color-n2: var(--n2-color);
+  --color-n1: var(--n1-color);
 }
 
 :root {
@@ -75,6 +81,12 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.645 0.246 16.439);
+
+  --n5-color: oklch(54.6% 0.245 262.881);
+  --n4-color: oklch(70% 0.19 157.5);
+  --n3-color: oklch(72% 0.22 55);
+  --n2-color: oklch(66% 0.18 186.5);
+  --n1-color: oklch(60% 0.23 14);
 }
 
 .dark {
@@ -109,6 +121,22 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.645 0.246 16.439);
+
+  --n5-color: oklch(54.6% 0.245 262.881);
+  --n4-color: oklch(70% 0.19 157.5);
+  --n3-color: oklch(72% 0.22 55);
+  --n2-color: oklch(66% 0.18 186.5);
+  --n1-color: oklch(60% 0.23 14);
+}
+
+:root {
+  --acme-canvas-color: oklch(0.967 0.003 264.542);
+}
+[data-theme="dark"] {
+  --acme-canvas-color: oklch(0.21 0.034 264.665);
+}
+@theme inline {
+  --color-canvas: var(--acme-canvas-color);
 }
 
 @layer base {
@@ -117,5 +145,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  a,
+  button {
+    @apply cursor-pointer;
   }
 }

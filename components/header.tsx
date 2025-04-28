@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { LightSwitch } from "@/components/light-switch";
+import { LightSwitch } from "@/components/LightSwitch";
 import { usePathname } from "next/navigation";
 
 export function Header() {
@@ -29,10 +29,7 @@ export function Header() {
               <span className="text-xl font-bold">日本語動詞活用練習</span>
             </Link>
             <div className="flex items-center gap-1">
-              <Button
-                variant={isActive("/") ? "default" : "ghost"}
-                size="sm"
-              >
+              <Button variant={isActive("/") ? "default" : "ghost"} size="sm">
                 <Link href="/">Practice</Link>
               </Button>
               <Button
@@ -65,6 +62,7 @@ export function Header() {
               >
                 <Link href="/verb/n1">N1</Link>
               </Button>
+              <div className="w-1" />
               <LightSwitch />
             </div>
           </div>
