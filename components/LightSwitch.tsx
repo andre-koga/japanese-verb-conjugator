@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function LightSwitch() {
+export default function LightSwitch() {
   const { setTheme } = useTheme();
 
   return (

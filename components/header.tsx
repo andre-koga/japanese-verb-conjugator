@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { LightSwitch } from "@/components/LightSwitch";
+import { LightSwitch } from "@/components";
 import { usePathname } from "next/navigation";
 
-export function Header() {
+export default function Header() {
   const pathname = usePathname();
 
   const isActive = (path: string) => {

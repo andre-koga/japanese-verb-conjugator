@@ -1,4 +1,4 @@
-export function Footer() {
+export default function Footer() {
   return (
     <footer className="flex flex-col items-center gap-1 pt-4 pb-20 text-center">
       <p className="font-bold">日本語動詞活用練習</p>

@@ -1,6 +1,6 @@
+import { Formality } from "@/lib/types";
 import { useGameStore } from "@/stores/gameStore";
-
-const formalities = ["Formal", "Informal"] as const;
+import { formalityOptions } from "@/lib/verbOptions";
 
 export default function FormalitySelector() {
   const { formality, setFormality } = useGameStore();
@@ -11,11 +11,11 @@ export default function FormalitySelector() {
       <select
         className="w-full rounded-md border p-2"
         value={formality}
-        onChange={(e) => setFormality(e.target.value)}
+        onChange={(e) => setFormality(e.target.value as Formality)}
       >
-        {formalities.map((f) => (
-          <option key={f} value={f}>
-            {f}
+        {formalityOptions.map((f) => (
+          <option key={f.id} value={f.id}>
+            {f.label}
           </option>
         ))}
       </select>
