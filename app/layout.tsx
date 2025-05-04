@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider, Header, Footer } from "@/components";
+import ThemeProvider from "@/components/ThemeProvider";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "日本語動詞活用練習",

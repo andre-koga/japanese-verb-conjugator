@@ -5,7 +5,7 @@ interface TenseOption {
   label: string;
   description: string;
   essential: boolean;
-  longDescription?: string; // Add detailed explanation of what the form is used for
+  longDescription: string; // Add detailed explanation of what the form is used for
   hasFormality: boolean; // Whether this tense has formality variations
   hasPolarity: boolean; // Whether this tense has polarity variations
 }
