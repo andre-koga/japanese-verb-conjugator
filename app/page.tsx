@@ -13,39 +13,98 @@ import AnswerInput from "@/components/AnswerInput";
 import NextButton from "@/components/NextButton";
 import TenseExplanation from "@/components/TenseExplanation";
 import ScoreDisplay from "@/components/ScoreDisplay";
+import { useGameStore } from "@/stores/gameStore";
 
 export default function Home() {
+  const {
+    newQuestion,
+    currentVerb,
+    showOptionsMenu,
+    toggleOptionsMenu,
+    setShowOptionsMenu,
+    clearStorage,
+  } = useGameStore();
+
+  // Determine if practice has content to display
+  const hasPracticeContent = currentVerb !== null;
+
   return (
     <div className="min-h-screen space-y-4">
       <PageTitle title="日本語動詞活用練習" subtitle="Conjugation Practice" />
 
       <div className="rounded-lg space-y-4">
-        <JLPTLevelSelector />
-        <TenseSelector />
+        {/* Show options when showOptionsMenu is true */}
+        {showOptionsMenu && (
+          <>
+            <JLPTLevelSelector />
+            <TenseSelector />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <PolaritySelector />
-          <FormalitySelector />
-        </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <PolaritySelector />
+              <FormalitySelector />
+            </div>
 
-        <DictionaryFormAlert />
+            <DictionaryFormAlert />
+          </>
+        )}
 
         <Button
           className="w-full rounded"
           variant="default"
           onClick={() => {
-            // TODO: Implement start practice logic
+            if (!hasPracticeContent) {
+              // Start practice if not already started
+              newQuestion();
+            } else if (showOptionsMenu) {
+              // Hide options and continue practice
+              setShowOptionsMenu(false);
+            } else {
+              // Show options
+              toggleOptionsMenu();
+            }
           }}
         >
-          Start Practice
+          {!hasPracticeContent
+            ? "Start Practice"
+            : showOptionsMenu
+              ? "Continue Practice"
+              : "Go Back"}
         </Button>
 
-        <VerbCard />
-        <InstructionsDisplay />
-        <AnswerInput />
-        <NextButton />
-        <TenseExplanation />
-        <ScoreDisplay />
+        {!showOptionsMenu && (
+          <>
+            <VerbCard />
+            <InstructionsDisplay />
+            <AnswerInput />
+            <NextButton />
+            <TenseExplanation />
+            <ScoreDisplay />
+          </>
+        )}
+
+        {/* Footer with reset button */}
+        <div className="mt-8 border-t pt-4">
+          <Button
+            className="w-full"
+            variant="destructive"
+            onClick={() => {
+              if (
+                confirm(
+                  "Are you sure you want to clear all saved data? This cannot be undone."
+                )
+              ) {
+                clearStorage();
+                // Force reload the page to ensure everything is reset
+                window.location.reload();
+              }
+            }}
+          >
+            Clear All Saved Data
+          </Button>
+          <p className="mt-2 text-xs text-center text-muted-foreground">
+            This will reset all settings and scores to default values.
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ interface GameState {
   formality: Formality; // Current active formality
   JLPTLevel: JLPTLevel;
   enabledJLPTLevels: JLPTLevel[];
+  showOptionsMenu: boolean; // Track if options menu is visible
 
   // Game state
   currentVerb: Verb | null;
@@ -42,35 +43,44 @@ interface GameState {
   setFormality: (formality: Formality) => void;
   setJLPTLevel: (level: JLPTLevel) => void;
   setEnabledJLPTLevels: (levels: JLPTLevel[]) => void;
+  setShowOptionsMenu: (show: boolean) => void; // Set options visibility
+  toggleOptionsMenu: () => void; // Toggle options visibility
   newQuestion: () => void;
   checkAnswer: (answer: string) => void;
   resetGame: () => void;
+  clearStorage: () => void; // Clear all storage and reset to defaults
 }
+
+// Initial state values to use for both initialization and reset
+const initialState = {
+  selectedTenses: ["present" as Tense],
+  tense: "present" as Tense,
+  selectedPolarities: ["affirmative" as Polarity],
+  polarity: "affirmative" as Polarity,
+  selectedFormalities: ["plain" as Formality],
+  formality: "plain" as Formality,
+  JLPTLevel: "N5" as JLPTLevel,
+  enabledJLPTLevels: ["N5" as JLPTLevel],
+  showOptionsMenu: true,
+  currentVerb: null,
+  isCorrect: false,
+  showAnswer: false,
+  score: 0,
+  totalQuestions: 0,
+  tenseStats: {},
+};
 
 const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
       // Initial state
-      selectedTenses: ["present"],
-      tense: "present",
-      selectedPolarities: ["affirmative"],
-      polarity: "affirmative",
-      selectedFormalities: ["plain"],
-      formality: "plain",
-      JLPTLevel: "N5",
-      enabledJLPTLevels: ["N5"],
-      currentVerb: null,
-      isCorrect: false,
-      showAnswer: false,
-      score: 0,
-      totalQuestions: 0,
-      tenseStats: {},
+      ...initialState,
 
       // Actions
       setSelectedTenses: (tenses: Tense[]) => {
         // If array is empty, keep at least one tense
         const selectedTenses: Tense[] =
-          tenses.length > 0 ? tenses : ["present"];
+          tenses.length > 0 ? tenses : ["present" as Tense];
         // Also update the current tense if needed
         const currentTense = get().tense;
         if (!tenses.includes(currentTense) && tenses.length > 0) {
@@ -84,7 +94,7 @@ const useGameStore = create<GameState>()(
       setSelectedPolarities: (polarities: Polarity[]) => {
         // If array is empty, keep at least one polarity
         const selectedPolarities: Polarity[] =
-          polarities.length > 0 ? polarities : ["affirmative"];
+          polarities.length > 0 ? polarities : ["affirmative" as Polarity];
         // Also update the current polarity if needed
         const currentPolarity = get().polarity;
         if (!polarities.includes(currentPolarity) && polarities.length > 0) {
@@ -98,7 +108,7 @@ const useGameStore = create<GameState>()(
       setSelectedFormalities: (formalities: Formality[]) => {
         // If array is empty, keep at least one formality
         const selectedFormalities: Formality[] =
-          formalities.length > 0 ? formalities : ["plain"];
+          formalities.length > 0 ? formalities : ["plain" as Formality];
         // Also update the current formality if needed
         const currentFormality = get().formality;
         if (!formalities.includes(currentFormality) && formalities.length > 0) {
@@ -112,6 +122,9 @@ const useGameStore = create<GameState>()(
       setJLPTLevel: (level: JLPTLevel) => set({ JLPTLevel: level }),
       setEnabledJLPTLevels: (levels: JLPTLevel[]) =>
         set({ enabledJLPTLevels: levels }),
+
+      setShowOptionsMenu: (show: boolean) => set({ showOptionsMenu: show }),
+      toggleOptionsMenu: () => set((state) => ({ showOptionsMenu: !state.showOptionsMenu })),
 
       newQuestion: () => {
         // Get a random tense from the selected tenses
@@ -138,7 +151,8 @@ const useGameStore = create<GameState>()(
         set({
           tense: randomTense,
           polarity: randomPolarity,
-          formality: randomFormality
+          formality: randomFormality,
+          showOptionsMenu: false // Hide options when starting practice
         });
 
         // TODO: Implement verb selection logic
@@ -186,7 +200,16 @@ const useGameStore = create<GameState>()(
           currentVerb: null,
           isCorrect: false,
           showAnswer: false,
+          showOptionsMenu: true, // Show options when resetting
         }),
+
+      clearStorage: () => {
+        // Clear persisted storage
+        localStorage.removeItem("game-storage");
+
+        // Reset to initial state
+        set(initialState);
+      },
     }),
     {
       name: "game-storage",
