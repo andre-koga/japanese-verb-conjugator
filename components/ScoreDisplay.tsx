@@ -1,7 +1,10 @@
 import { useGameStore } from "@/stores/gameStore";
 
 export default function ScoreDisplay() {
-  const { score, totalQuestions } = useGameStore();
+  const { score, totalQuestions, currentVerb } = useGameStore();
+
+  // Don't render if practice hasn't started yet
+  if (!currentVerb) return null;
 
   return (
     <div className="mb-6 rounded-lg border p-4">

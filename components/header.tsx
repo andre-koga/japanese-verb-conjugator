@@ -23,7 +23,7 @@ export default function Header() {
       </p>
       <nav className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-b backdrop-blur">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center sm:justify-between gap-3 flex-wrap">
             <Link href="/" className="flex items-center gap-2">
               <Image src="/favicon.svg" alt="Logo" width={32} height={32} />
               <span className="text-xl font-bold">日本語動詞活用練習</span>

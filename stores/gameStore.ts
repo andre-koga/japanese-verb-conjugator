@@ -16,10 +16,12 @@ interface TenseStats {
 
 interface GameState {
   // Game settings
-  selectedTenses: Tense[]; // New field for multiple tense selection
+  selectedTenses: Tense[]; // Multiple tense selection
   tense: Tense; // Current active tense
-  polarity: Polarity;
-  formality: Formality;
+  selectedPolarities: Polarity[]; // Multiple polarity selection
+  polarity: Polarity; // Current active polarity
+  selectedFormalities: Formality[]; // Multiple formality selection
+  formality: Formality; // Current active formality
   JLPTLevel: JLPTLevel;
   enabledJLPTLevels: JLPTLevel[];
 
@@ -32,9 +34,11 @@ interface GameState {
   tenseStats: Record<string, TenseStats>;
 
   // Actions
-  setSelectedTenses: (tenses: Tense[]) => void; // New action for multiple tenses
-  setTense: (tense: Tense) => void; // Add this action
+  setSelectedTenses: (tenses: Tense[]) => void;
+  setTense: (tense: Tense) => void;
+  setSelectedPolarities: (polarities: Polarity[]) => void;
   setPolarity: (polarity: Polarity) => void;
+  setSelectedFormalities: (formalities: Formality[]) => void;
   setFormality: (formality: Formality) => void;
   setJLPTLevel: (level: JLPTLevel) => void;
   setEnabledJLPTLevels: (levels: JLPTLevel[]) => void;
@@ -49,7 +53,9 @@ const useGameStore = create<GameState>()(
       // Initial state
       selectedTenses: ["present"],
       tense: "present",
+      selectedPolarities: ["affirmative"],
       polarity: "affirmative",
+      selectedFormalities: ["plain"],
       formality: "plain",
       JLPTLevel: "N5",
       enabledJLPTLevels: ["N5"],
@@ -66,7 +72,7 @@ const useGameStore = create<GameState>()(
         const selectedTenses: Tense[] =
           tenses.length > 0 ? tenses : ["present"];
         // Also update the current tense if needed
-        const currentTense = get().selectedTenses[0];
+        const currentTense = get().tense;
         if (!tenses.includes(currentTense) && tenses.length > 0) {
           set({ selectedTenses, tense: tenses[0] });
         } else {
@@ -74,22 +80,66 @@ const useGameStore = create<GameState>()(
         }
       },
       setTense: (tense: Tense) => set({ tense }),
+
+      setSelectedPolarities: (polarities: Polarity[]) => {
+        // If array is empty, keep at least one polarity
+        const selectedPolarities: Polarity[] =
+          polarities.length > 0 ? polarities : ["affirmative"];
+        // Also update the current polarity if needed
+        const currentPolarity = get().polarity;
+        if (!polarities.includes(currentPolarity) && polarities.length > 0) {
+          set({ selectedPolarities, polarity: polarities[0] });
+        } else {
+          set({ selectedPolarities });
+        }
+      },
       setPolarity: (polarity: Polarity) => set({ polarity }),
+
+      setSelectedFormalities: (formalities: Formality[]) => {
+        // If array is empty, keep at least one formality
+        const selectedFormalities: Formality[] =
+          formalities.length > 0 ? formalities : ["plain"];
+        // Also update the current formality if needed
+        const currentFormality = get().formality;
+        if (!formalities.includes(currentFormality) && formalities.length > 0) {
+          set({ selectedFormalities, formality: formalities[0] });
+        } else {
+          set({ selectedFormalities });
+        }
+      },
       setFormality: (formality: Formality) => set({ formality }),
+
       setJLPTLevel: (level: JLPTLevel) => set({ JLPTLevel: level }),
       setEnabledJLPTLevels: (levels: JLPTLevel[]) =>
         set({ enabledJLPTLevels: levels }),
 
       newQuestion: () => {
         // Get a random tense from the selected tenses
-        const { selectedTenses } = get();
+        const { selectedTenses, selectedPolarities, selectedFormalities } = get();
+
         const randomTenseIndex = Math.floor(
           Math.random() * selectedTenses.length,
         );
         const randomTense = selectedTenses[randomTenseIndex];
 
-        // Update the current tense
-        set({ tense: randomTense });
+        // Get a random polarity from the selected polarities
+        const randomPolarityIndex = Math.floor(
+          Math.random() * selectedPolarities.length,
+        );
+        const randomPolarity = selectedPolarities[randomPolarityIndex];
+
+        // Get a random formality from the selected formalities
+        const randomFormalityIndex = Math.floor(
+          Math.random() * selectedFormalities.length,
+        );
+        const randomFormality = selectedFormalities[randomFormalityIndex];
+
+        // Update the current tense, polarity, and formality
+        set({
+          tense: randomTense,
+          polarity: randomPolarity,
+          formality: randomFormality
+        });
 
         // TODO: Implement verb selection logic
         set({

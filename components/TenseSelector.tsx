@@ -84,12 +84,12 @@ export default function TenseSelector() {
       <TooltipProvider>
         {essentialGroups.map((group) => (
           <div key={group.id} className="mb-4">
-            <h3 className="text-sm font-medium mb-2 flex items-center">
+            <h3 className="text-sm font-medium mb-2 flex items-center flex-wrap">
               {group.label}
               <Label className="text-xs opacity-70 font-normal ml-2">
                 {group.description}
               </Label>
-              <span className="text-xs text-muted-foreground ml-2">
+              <span className="text-xs text-muted-foreground ml-2 hidden sm:block">
                 ({tensesByEssential[group.id].length} tenses)
               </span>
             </h3>
