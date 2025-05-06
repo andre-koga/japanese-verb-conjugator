@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Formality, JLPTLevel, Polarity, Tense } from "@/lib/types";
+import { conjugator } from "@/lib/conjugation";
 
 interface Verb {
   dictionaryForm: string;
@@ -155,13 +156,15 @@ const useGameStore = create<GameState>()(
           showOptionsMenu: false // Hide options when starting practice
         });
 
-        // TODO: Implement verb selection logic
+        // Get random verb from the conjugator
+        const randomVerb = conjugator.getRandomVerb();
+
         set({
           currentVerb: {
-            dictionaryForm: "食べる",
-            meaning: "to eat",
-            type: "ichidan",
-            JLPTLevel: "N5",
+            dictionaryForm: randomVerb.dictionary,
+            meaning: randomVerb.meaning,
+            type: randomVerb.type,
+            JLPTLevel: "N5", // This could be updated with the actual JLPT level
           },
           isCorrect: false,
           showAnswer: false,
@@ -169,11 +172,18 @@ const useGameStore = create<GameState>()(
       },
 
       checkAnswer: (answer) => {
-        const { currentVerb } = get();
+        const { currentVerb, tense, polarity, formality } = get();
         if (!currentVerb) return;
 
-        // TODO: Implement answer checking logic
-        const isCorrect = answer === "食べます"; // Placeholder
+        // Find the verb in the conjugator
+        const verbObj = conjugator.findVerb(currentVerb.dictionaryForm);
+        if (!verbObj) return;
+
+        // Get the correct conjugation
+        const correctAnswer = conjugator.conjugate(verbObj, tense, polarity, formality);
+
+        // Check if the answer is correct
+        const isCorrect = answer.trim() === correctAnswer.trim();
 
         set((state) => ({
           isCorrect,

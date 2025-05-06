@@ -1,14 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import VerbCard from "@/components/VerbCard";
+import VerbDisplay from "@/components/VerbDisplay";
 import PageTitle from "@/components/PageTitle";
 import JLPTLevelSelector from "@/components/JLPTLevelSelector";
 import TenseSelector from "@/components/TenseSelector";
 import PolaritySelector from "@/components/PolaritySelector";
 import FormalitySelector from "@/components/FormalitySelector";
 import DictionaryFormAlert from "@/components/DictionaryFormAlert";
-import InstructionsDisplay from "@/components/InstructionsDisplay";
 import AnswerInput from "@/components/AnswerInput";
 import NextButton from "@/components/NextButton";
 import TenseExplanation from "@/components/TenseExplanation";
@@ -35,15 +34,13 @@ export default function Home() {
       description: "Settings and practice data have been reset to defaults",
       duration: 3000,
     });
-    // Force reload the page to ensure everything is reset
-    window.location.reload();
   };
 
   return (
     <div className="min-h-screen space-y-4">
       <PageTitle title="日本語動詞活用練習" subtitle="Conjugation Practice" />
 
-      <div className="rounded-lg space-y-4">
+      <div className="rounded-lg space-y-8">
         {/* Show options when showOptionsMenu is true */}
         {showOptionsMenu && (
           <>
@@ -84,8 +81,7 @@ export default function Home() {
 
         {!showOptionsMenu && (
           <>
-            <VerbCard />
-            <InstructionsDisplay />
+            <VerbDisplay />
             <AnswerInput />
             <NextButton />
             <TenseExplanation />

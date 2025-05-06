@@ -31,7 +31,7 @@ export default function PolaritySelector() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <div className="flex items-center justify-between">
         <Label htmlFor="polarity" className="text-base font-medium">
           Polarity
@@ -47,7 +47,7 @@ export default function PolaritySelector() {
       </div>
 
       <TooltipProvider>
-        <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 gap-x-2 items-start">
+        <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 gap-x-2 items-start mb-0">
           {polarityOptions.map((option) => (
             <div key={option.id}>
               <div className="flex items-center space-x-2">

@@ -63,7 +63,7 @@ export default function TenseSelector() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <div className="flex items-center justify-between">
         <Label htmlFor="tenses" className="text-base font-medium">
           Tenses
@@ -83,8 +83,8 @@ export default function TenseSelector() {
 
       <TooltipProvider>
         {essentialGroups.map((group) => (
-          <div key={group.id} className="mb-4">
-            <h3 className="text-sm font-medium mb-2 flex items-center flex-wrap">
+          <div key={group.id} className="space-y-2">
+            <h3 className="text-sm font-medium flex items-center flex-wrap">
               {group.label}
               <Label className="text-xs opacity-70 font-normal ml-2">
                 {group.description}
@@ -94,16 +94,16 @@ export default function TenseSelector() {
               </span>
             </h3>
 
-            <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2 items-start">
+            <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2">
               {tensesByEssential[group.id].map((tense) => (
                 <div key={tense.id}>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex space-x-2">
                     <Checkbox
                       id={`tense-${tense.id}`}
                       checked={selectedTenses.includes(tense.id)}
                       onCheckedChange={() => handleTenseToggle(tense.id)}
                     />
-                    <div className="flex items-center gap-2">
+                    <div className="flex gap-2">
                       <Label
                         htmlFor={`tense-${tense.id}`}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
@@ -116,7 +116,10 @@ export default function TenseSelector() {
                       {tense.longDescription && (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <InfoIcon className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                            <InfoIcon
+                              size={14}
+                              className="text-muted-foreground cursor-help"
+                            />
                           </TooltipTrigger>
                           <TooltipContent side="top" className="max-w-72">
                             {tense.longDescription}
@@ -132,7 +135,7 @@ export default function TenseSelector() {
         ))}
       </TooltipProvider>
 
-      <div className="text-xs text-muted-foreground">
+      <div className="text-xs text-muted-foreground -mt-2">
         {selectedTenses.length} of {tenseOptions.length} selected
       </div>
     </div>
