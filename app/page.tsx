@@ -14,6 +14,7 @@ import NextButton from "@/components/NextButton";
 import TenseExplanation from "@/components/TenseExplanation";
 import ScoreDisplay from "@/components/ScoreDisplay";
 import { useGameStore } from "@/stores/gameStore";
+import { toast } from "sonner";
 
 export default function Home() {
   const {
@@ -27,6 +28,16 @@ export default function Home() {
 
   // Determine if practice has content to display
   const hasPracticeContent = currentVerb !== null;
+
+  const handleClearStorage = () => {
+    clearStorage();
+    toast.success("All data has been cleared successfully", {
+      description: "Settings and practice data have been reset to defaults",
+      duration: 3000,
+    });
+    // Force reload the page to ensure everything is reset
+    window.location.reload();
+  };
 
   return (
     <div className="min-h-screen space-y-4">
@@ -83,24 +94,11 @@ export default function Home() {
         )}
 
         {/* Footer with reset button */}
-        <div className="mt-8 border-t pt-4">
-          <Button
-            className="w-full"
-            variant="destructive"
-            onClick={() => {
-              if (
-                confirm(
-                  "Are you sure you want to clear all saved data? This cannot be undone."
-                )
-              ) {
-                clearStorage();
-                // Force reload the page to ensure everything is reset
-                window.location.reload();
-              }
-            }}
-          >
+        <div className="mt-12 border-t pt-4 flex flex-col items-center">
+          <Button variant="destructive" onClick={handleClearStorage}>
             Clear All Saved Data
           </Button>
+
           <p className="mt-2 text-xs text-center text-muted-foreground">
             This will reset all settings and scores to default values.
           </p>

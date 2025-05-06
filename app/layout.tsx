@@ -3,6 +3,7 @@ import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "日本語動詞活用練習",
@@ -31,6 +32,7 @@ export default function RootLayout({
           </main>
 
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
