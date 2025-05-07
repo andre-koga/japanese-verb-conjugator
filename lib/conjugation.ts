@@ -19,7 +19,11 @@ export function getVerbStem(
   ) => [string, string],
 ): [string, string] {
   if (verb.type === "ichidan") {
-    return [verb.dictionary.slice(0, -1), verb.kana.slice(0, -1)]; // Remove the final 'る'
+    const stem: [string, string] = [verb.dictionary.slice(0, -1), verb.kana.slice(0, -1)]; // Remove the final 'る'
+    if (godanVowel === "te") {
+      return [stem[0] + "て", stem[1] + "て"];
+    }
+    return stem;
   } else if (verb.type === "godan") {
     const lastChar = verb.kana.slice(-1); // Get the last character
     const base = verb.dictionary.slice(0, -1); // Get the part before the last char

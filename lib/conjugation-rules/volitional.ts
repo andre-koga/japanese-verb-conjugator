@@ -9,7 +9,7 @@ export const volitionalRules: Map<ConjugationForm, ConjugationRule[]> = new Map(
   [
     [
       {
-        tense: "volitional",
+        tense: "presumptive",
         polarity: "affirmative",
         formality: "plain",
       },
@@ -24,7 +24,7 @@ export const volitionalRules: Map<ConjugationForm, ConjugationRule[]> = new Map(
     ],
     [
       {
-        tense: "volitional",
+        tense: "presumptive",
         polarity: "affirmative",
         formality: "polite",
       },
@@ -37,7 +37,7 @@ export const volitionalRules: Map<ConjugationForm, ConjugationRule[]> = new Map(
     ],
     [
       {
-        tense: "volitional",
+        tense: "presumptive",
         polarity: "negative",
         formality: "plain",
       },
@@ -50,7 +50,7 @@ export const volitionalRules: Map<ConjugationForm, ConjugationRule[]> = new Map(
     ],
     [
       {
-        tense: "volitional",
+        tense: "presumptive",
         polarity: "negative",
         formality: "polite",
       },
