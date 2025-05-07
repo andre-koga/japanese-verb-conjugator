@@ -102,7 +102,7 @@ export default function VerbDisplay() {
         <div className="bg-border mx-auto h-px w-3/4"></div>
 
         {/* Instructions */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           <h2 className="font-medium">Conjugate To:</h2>
           <div className="flex flex-wrap justify-center gap-4">
             <div className="flex flex-col items-center gap-1">
@@ -188,17 +188,19 @@ export default function VerbDisplay() {
         )}
 
         {/* Jisho Lookup Button */}
-        <Link
-          href={`https://jisho.org/search/${currentVerb.dictionary}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Look up on Jisho.org"
-        >
-          <Button variant="ghost" size="sm">
-            <ExternalLink className="mr-2 h-4 w-4" />
-            <span>Look up on Jisho</span>
-          </Button>
-        </Link>
+        <div>
+          <Link
+            href={`https://jisho.org/search/${currentVerb.dictionary}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Look up on Jisho.org"
+          >
+            <Button variant="ghost" size="sm">
+              <ExternalLink className="mr-2 h-4 w-4" />
+              <span>Look up on Jisho</span>
+            </Button>
+          </Link>
+        </div>
       </CardContent>
     </Card>
   );

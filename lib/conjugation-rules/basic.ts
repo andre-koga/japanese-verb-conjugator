@@ -8,7 +8,7 @@ import { addVerbEnding, getVerbStem } from "@/lib/conjugation";
 export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   [
     {
-      tense: "present",
+      tense: "present indicative",
       polarity: "affirmative",
       formality: "plain",
     },
@@ -20,7 +20,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   ],
   [
     {
-      tense: "present",
+      tense: "present indicative",
       polarity: "affirmative",
       formality: "polite",
     },
@@ -33,7 +33,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   ],
   [
     {
-      tense: "present",
+      tense: "present indicative",
       polarity: "negative",
       formality: "plain",
     },
@@ -46,7 +46,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   ],
   [
     {
-      tense: "present",
+      tense: "present indicative",
       polarity: "negative",
       formality: "polite",
     },
@@ -61,7 +61,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   // PAST TENSE
   [
     {
-      tense: "past",
+      tense: "past indicative",
       polarity: "affirmative",
       formality: "plain",
     },
@@ -74,7 +74,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   ],
   [
     {
-      tense: "past",
+      tense: "past indicative",
       polarity: "affirmative",
       formality: "polite",
     },
@@ -87,7 +87,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   ],
   [
     {
-      tense: "past",
+      tense: "past indicative",
       polarity: "negative",
       formality: "plain",
     },
@@ -100,7 +100,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
   ],
   [
     {
-      tense: "past",
+      tense: "past indicative",
       polarity: "negative",
       formality: "polite",
     },

@@ -7,6 +7,10 @@ interface TenseOption {
   longDescription: string;
   hasFormality: boolean;
   hasPolarity: boolean;
+  allowedCombinations?: {
+    polarity: Polarity;
+    formality: Formality;
+  }[];
 }
 
 interface PolarityOption {
@@ -39,15 +43,14 @@ interface TransitivityOption {
 
 export const tenseOptions: TenseOption[] = [
   {
-    id: "present",
-    label: "Present",
+    id: "present indicative",
+    label: "Present Indicative",
     description: "現在形",
     hasFormality: true,
     hasPolarity: true,
     longDescription:
       "The present tense (dictionary form) is used to express habitual actions, general truths, and future events. It's the base form of Japanese verbs.",
   },
-
   {
     id: "te form",
     label: "Te-form",
@@ -57,10 +60,27 @@ export const tenseOptions: TenseOption[] = [
     longDescription:
       "The te-form is a versatile connecting form used to link verbs, create requests, show ongoing actions, and form many compound verbs.",
   },
-
   {
-    id: "past",
-    label: "Past",
+    id: "presumptive",
+    label: "Presumptive",
+    description: "意向形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      'The presumptive form expresses intention or conjecture, similar to "let\'s" or "probably" in English. It\'s commonly used for suggesting activities or expressing likelihood.',
+  },
+  {
+    id: "imperative",
+    label: "Imperative",
+    description: "命令形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      "The imperative form is used for commands or strong requests. The plain form is considered rude except among close friends. The negative form (prohibitive) is used to tell someone not to do something, with な being the plain form and ないでください being the polite form.",
+  },
+  {
+    id: "past indicative",
+    label: "Past Indicative",
     description: "過去形",
     hasFormality: true,
     hasPolarity: true,
@@ -77,77 +97,34 @@ export const tenseOptions: TenseOption[] = [
     longDescription:
       "The past presumptive form expresses conjecture about past events, similar to 'must have' or 'probably' in English.",
   },
-
   {
-    id: "progressive",
-    label: "Progressive",
+    id: "present progressive",
+    label: "Present Progressive",
     description: "ている形",
     hasFormality: true,
     hasPolarity: true,
+    allowedCombinations: [
+      { polarity: "affirmative", formality: "plain" },
+      { polarity: "affirmative", formality: "polite" },
+      { polarity: "negative", formality: "polite" }
+    ],
     longDescription:
       "The progressive form indicates ongoing actions or states. It combines the te-form with iru/imasu and can also show resultant states.",
   },
-
   {
     id: "past progressive",
     label: "Past Progressive",
     description: "ていた形",
     hasFormality: true,
     hasPolarity: true,
+    allowedCombinations: [
+      { polarity: "affirmative", formality: "plain" },
+      { polarity: "affirmative", formality: "polite" },
+      { polarity: "negative", formality: "polite" }
+    ],
     longDescription:
       "The past progressive form indicates actions or states that were ongoing in the past. It's formed by conjugating the progressive form into the past tense.",
   },
-
-  {
-    id: "potential",
-    label: "Potential",
-    description: "可能形",
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      'The potential form expresses the ability to do something ("can do"). It\'s formed differently for ichidan and godan verbs.',
-  },
-
-  {
-    id: "passive",
-    label: "Passive",
-    description: "受身形",
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      'The passive form is used when the subject is being acted upon, similar to "is done" in English. It can also express adversity in Japanese.',
-  },
-
-  {
-    id: "causative",
-    label: "Causative",
-    description: "使役形",
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The causative form expresses making or letting someone do something. It indicates permission or coercion.",
-  },
-
-  {
-    id: "imperative",
-    label: "Imperative",
-    description: "命令形",
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The imperative form is used for commands or strong requests. The plain form is considered rude except among close friends. The negative form (prohibitive) is used to tell someone not to do something, with な being the plain form and ないでください being the polite form.",
-  },
-
-  {
-    id: "presumptive",
-    label: "Presumptive",
-    description: "意向形",
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      'The presumptive form expresses intention or conjecture, similar to "let\'s" or "probably" in English. It\'s commonly used for suggesting activities or expressing likelihood.',
-  },
-
   {
     id: "conditional ba",
     label: "Conditional (Ba)",
@@ -157,7 +134,6 @@ export const tenseOptions: TenseOption[] = [
     longDescription:
       'The ba-conditional expresses hypothetical conditions ("if X, then Y") and is used for general or natural consequences.',
   },
-
   {
     id: "conditional tara",
     label: "Conditional (Tara)",
@@ -166,6 +142,33 @@ export const tenseOptions: TenseOption[] = [
     hasPolarity: true,
     longDescription:
       'The tara-conditional is used for "if/when" conditions with a sequential nuance. It\'s often used for unexpected discoveries or future uncertainties.',
+  },
+  {
+    id: "potential",
+    label: "Potential",
+    description: "可能形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      'The potential form expresses the ability to do something ("can do"). It\'s formed differently for ichidan and godan verbs.',
+  },
+  {
+    id: "causative",
+    label: "Causative",
+    description: "使役形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      "The causative form expresses making or letting someone do something. It indicates permission or coercion.",
+  },
+  {
+    id: "passive",
+    label: "Passive",
+    description: "受身形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      'The passive form is used when the subject is being acted upon, similar to "is done" in English. It can also express adversity in Japanese.',
   },
 ];
 

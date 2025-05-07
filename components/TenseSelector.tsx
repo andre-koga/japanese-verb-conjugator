@@ -92,7 +92,7 @@ export default function TenseSelector() {
         </div>
       </TooltipProvider>
 
-      <div className="text-muted-foreground -mt-2 text-xs">
+      <div className="text-muted-foreground text-xs">
         {selectedTenses.length} of {tenseOptions.length} selected
       </div>
     </div>

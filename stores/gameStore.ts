@@ -24,7 +24,7 @@ const useGameStore = create<GameState>()(
       setSelectedTenses: (tenses: Tense[]) => {
         // If array is empty, keep at least one tense
         const selectedTenses: Tense[] =
-          tenses.length > 0 ? tenses : ["present" as Tense];
+          tenses.length > 0 ? tenses : ["present indicative" as Tense];
         // Also update the current tense if needed
         const currentTense = get().tense;
         if (!tenses.includes(currentTense) && tenses.length > 0) {
@@ -81,30 +81,61 @@ const useGameStore = create<GameState>()(
           recentVerbs,
         } = get();
 
-        const randomTenseIndex = Math.floor(
-          Math.random() * selectedTenses.length,
+        // Filter out any invalid tenses
+        const validTenses = selectedTenses.filter(tense =>
+          tenseOptions.some(option => option.id === tense)
         );
-        const randomTense = selectedTenses[randomTenseIndex];
+
+        // If no valid tenses, use the first tense from tenseOptions
+        if (validTenses.length === 0) {
+          set({ selectedTenses: [tenseOptions[0].id] });
+          return get().newQuestion();
+        }
+
+        const randomTenseIndex = Math.floor(
+          Math.random() * validTenses.length,
+        );
+        const randomTense = validTenses[randomTenseIndex];
 
         // Get the tense option to check its capabilities
         const tenseOption = tenseOptions.find(t => t.id === randomTense);
         if (!tenseOption) {
           console.error("Invalid tense:", randomTense);
-          return;
+          return get().newQuestion();
         }
 
-        // Only select polarity if the tense supports it
+        // Only select polarity and formality if the tense supports them
         let randomPolarity = "affirmative" as Polarity;
-        if (tenseOption.hasPolarity) {
+        let randomFormality = "plain" as Formality;
+
+        if (tenseOption.hasPolarity && tenseOption.hasFormality) {
+          if (tenseOption.allowedCombinations) {
+            // If there are allowed combinations, randomly select one
+            const randomCombination = tenseOption.allowedCombinations[
+              Math.floor(Math.random() * tenseOption.allowedCombinations.length)
+            ];
+            randomPolarity = randomCombination.polarity;
+            randomFormality = randomCombination.formality;
+          } else {
+            // If no specific combinations are defined, randomly select from available options
+            const randomPolarityIndex = Math.floor(
+              Math.random() * selectedPolarities.length,
+            );
+            randomPolarity = selectedPolarities[randomPolarityIndex];
+
+            const randomFormalityIndex = Math.floor(
+              Math.random() * selectedFormalities.length,
+            );
+            randomFormality = selectedFormalities[randomFormalityIndex];
+          }
+        } else if (tenseOption.hasPolarity) {
+          // If only polarity is supported
           const randomPolarityIndex = Math.floor(
             Math.random() * selectedPolarities.length,
           );
           randomPolarity = selectedPolarities[randomPolarityIndex];
-        }
-
-        // Only select formality if the tense supports it
-        let randomFormality = "plain" as Formality;
-        if (tenseOption.hasFormality) {
+        } else if (tenseOption.hasFormality) {
+          // If only formality is supported
           const randomFormalityIndex = Math.floor(
             Math.random() * selectedFormalities.length,
           );
@@ -128,7 +159,7 @@ const useGameStore = create<GameState>()(
 
         // Filter out recent verbs
         const availableVerbs = levelVerbs.filter(
-          (verb) => !recentVerbs.includes(verb.dictionary),
+          (verb) => !recentVerbs.some(rv => rv.dictionary === verb.dictionary)
         );
 
         // If all verbs have been used recently, clear the recent verbs list
@@ -142,7 +173,7 @@ const useGameStore = create<GameState>()(
         const selectedVerb = availableVerbs[randomIndex];
 
         // Add to recent verbs and maintain size limit
-        const newRecentVerbs = [...recentVerbs, selectedVerb.dictionary];
+        const newRecentVerbs = [...recentVerbs, selectedVerb];
         if (newRecentVerbs.length > 10) {
           newRecentVerbs.shift();
         }
@@ -190,7 +221,9 @@ const useGameStore = create<GameState>()(
         set({
           score: 0,
           totalQuestions: 0,
-          tenseStats: {},
+          tenseStats: {} as Record<Tense, { correct: number; total: number }>,
+          polarityStats: {} as Record<Polarity, { correct: number; total: number }>,
+          formalityStats: {} as Record<Formality, { correct: number; total: number }>,
           currentVerb: null,
           isCorrect: false,
           showAnswer: false,

@@ -62,19 +62,19 @@ export interface ConjugationRule {
 }
 
 export type Tense =
-  | "present"
+  | "present indicative"
+  | "te form"
   | "presumptive"
   | "imperative"
-  | "past"
+  | "past indicative"
   | "past presumptive"
-  | "progressive"
+  | "present progressive"
   | "past progressive"
   | "conditional ba"
   | "conditional tara"
   | "potential"
   | "causative"
-  | "passive"
-  | "te form";
+  | "passive";
 
 export interface TenseStats {
   correct: number;
@@ -96,8 +96,10 @@ export interface GameStateVariables {
   showAnswer: boolean;
   score: number;
   totalQuestions: number;
-  tenseStats: Record<string, TenseStats>;
-  recentVerbs: string[];
+  tenseStats: Record<Tense, { correct: number; total: number }>;
+  polarityStats: Record<Polarity, { correct: number; total: number }>;
+  formalityStats: Record<Formality, { correct: number; total: number }>;
+  recentVerbs: JapaneseVerb[];
 }
 
 export interface GameState extends GameStateVariables {

@@ -13,6 +13,7 @@ import TenseExplanation from "@/components/TenseExplanation";
 import ScoreDisplay from "@/components/ScoreDisplay";
 import { useGameStore } from "@/stores/gameStore";
 import { toast } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const {
@@ -36,68 +37,77 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen space-y-4">
+    <div className="min-h-screen space-y-8">
       <PageTitle title="日本語動詞活用練習" subtitle="Conjugation Practice" />
 
-      <div className="space-y-8 rounded-lg">
-        {/* Show options when showOptionsMenu is true */}
-        {showOptionsMenu && (
-          <>
-            <JLPTLevelSelector />
-            <TenseSelector />
+      <Tabs defaultValue="practice" className="w-full space-y-4">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="practice">Practice</TabsTrigger>
+          <TabsTrigger value="performance">Performance</TabsTrigger>
+        </TabsList>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              <PolaritySelector />
-              <FormalitySelector />
-            </div>
+        <TabsContent value="practice" className="space-y-8 rounded-lg">
+          {/* Show options when showOptionsMenu is true */}
+          {showOptionsMenu && (
+            <>
+              <JLPTLevelSelector />
+              <TenseSelector />
 
-            <DictionaryFormAlert />
-          </>
-        )}
+              <div className="grid gap-4 md:grid-cols-2">
+                <PolaritySelector />
+                <FormalitySelector />
+              </div>
 
-        <Button
-          className="w-full rounded"
-          variant="default"
-          onClick={() => {
-            if (!hasPracticeContent) {
-              // Start practice if not already started
-              newQuestion();
-            } else if (showOptionsMenu) {
-              // Hide options and continue practice
-              setShowOptionsMenu(false);
-            } else {
-              // Show options
-              toggleOptionsMenu();
-            }
-          }}
-        >
-          {!hasPracticeContent
-            ? "Start Practice"
-            : showOptionsMenu
-              ? "Continue Practice"
-              : "Go Back"}
-        </Button>
+              <DictionaryFormAlert />
+            </>
+          )}
 
-        {!showOptionsMenu && (
-          <>
-            <VerbDisplay />
-            <AnswerInput />
-            <TenseExplanation />
-            <ScoreDisplay />
-          </>
-        )}
+          {!showOptionsMenu && (
+            <>
+              <VerbDisplay />
+              <AnswerInput />
+              <TenseExplanation />
+            </>
+          )}
 
-        {/* Footer with reset button */}
-        <div className="mt-12 flex flex-col items-center border-t pt-4">
-          <Button variant="destructive" onClick={handleClearStorage}>
-            Clear All Saved Data
+          <Button
+            className="w-full rounded"
+            variant="default"
+            onClick={() => {
+              if (!hasPracticeContent) {
+                // Start practice if not already started
+                newQuestion();
+              } else if (showOptionsMenu) {
+                // Hide options and continue practice
+                setShowOptionsMenu(false);
+              } else {
+                // Show options
+                toggleOptionsMenu();
+              }
+            }}
+          >
+            {!hasPracticeContent
+              ? "Start Practice"
+              : showOptionsMenu
+                ? "Continue Practice"
+                : "Go Back"}
           </Button>
+        </TabsContent>
 
-          <p className="text-muted-foreground mt-2 text-center text-xs">
-            This will reset all settings and scores to default values.
-          </p>
-        </div>
-      </div>
+        <TabsContent value="performance" className="space-y-8 rounded-lg">
+          <ScoreDisplay />
+          {/* Footer with reset button */}
+          <div className="mt-12 flex flex-col items-center">
+            <Button variant="destructive" onClick={handleClearStorage}>
+              Clear All Saved Data
+            </Button>
+
+            <p className="text-muted-foreground mt-2 text-center text-xs">
+              This will reset all settings and scores to default values.
+            </p>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

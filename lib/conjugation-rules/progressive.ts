@@ -9,7 +9,7 @@ export const progressiveRules: Map<ConjugationForm, ConjugationRule[]> =
   new Map([
     [
       {
-        tense: "progressive",
+        tense: "present progressive",
         polarity: "affirmative",
         formality: "plain",
       },
@@ -22,7 +22,7 @@ export const progressiveRules: Map<ConjugationForm, ConjugationRule[]> =
     ],
     [
       {
-        tense: "progressive",
+        tense: "present progressive",
         polarity: "affirmative",
         formality: "polite",
       },
@@ -35,7 +35,7 @@ export const progressiveRules: Map<ConjugationForm, ConjugationRule[]> =
     ],
     [
       {
-        tense: "progressive",
+        tense: "present progressive",
         polarity: "negative",
         formality: "plain",
       },
@@ -48,7 +48,7 @@ export const progressiveRules: Map<ConjugationForm, ConjugationRule[]> =
     ],
     [
       {
-        tense: "progressive",
+        tense: "present progressive",
         polarity: "negative",
         formality: "polite",
       },
