@@ -1,16 +1,19 @@
-type VerbType = "godan" | "ichidan";
+export type VerbType = "godan" | "ichidan";
 
-type Transitivity = "transitive" | "intransitive";
+export type Transitivity = "transitive" | "intransitive";
 
 // Create a type for the conjugation form
-export type ConjugationForm = {
+export interface ConjugationForm {
   tense: Tense;
   polarity: Polarity;
   formality: Formality;
-};
+}
 
-// Create a type for irregular verb forms that only requires exceptions
-type IrregularVerbForms = Map<ConjugationForm, [string, string]>;
+type FormKey = `${Tense}-${Polarity}-${Formality}`;
+
+export function getFormKey(form: ConjugationForm): FormKey {
+  return `${form.tense}-${form.polarity}-${form.formality}`;
+}
 
 export type GodanVowel = "a" | "i" | "u" | "e" | "o" | "te" | "ta";
 
@@ -44,25 +47,15 @@ export type Polarity = "affirmative" | "negative";
 export type Formality = "plain" | "polite";
 
 // Create a discriminated union type for JapaneseVerb
-export type JapaneseVerb =
-  | {
-    dictionary: string;
-    kana: string;
-    meaning: string;
-    type: VerbType;
-    transitivity: Transitivity;
-    JLPTLevel?: JLPTLevel;
-  }
-  | {
-    dictionary: string;
-    kana: string;
-    meaning: string;
-    type: "irregular";
-    irregularForms: IrregularVerbForms;
-    regularPattern: VerbType;
-    transitivity: Transitivity;
-    JLPTLevel?: JLPTLevel;
-  };
+export interface JapaneseVerb {
+  dictionary: string;
+  kana: string;
+  meaning: string;
+  type: "godan" | "ichidan" | "irregular";
+  transitivity: "transitive" | "intransitive";
+  JLPTLevel?: JLPTLevel;
+  irregularForms?: Partial<Record<FormKey, [string, string]>>;
+}
 
 export interface ConjugationRule {
   transform: (verb: JapaneseVerb) => [string, string];

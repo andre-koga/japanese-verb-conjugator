@@ -1,4 +1,4 @@
-import type { Formality, Polarity, Tense } from "./types";
+import type { Formality, Polarity, Tense, VerbType, Transitivity } from "./types";
 
 interface TenseOption {
   id: Tense;
@@ -14,12 +14,28 @@ interface PolarityOption {
   id: Polarity;
   label: string;
   description: string;
+  longDescription: string;
 }
 
 interface FormalityOption {
   id: Formality;
   label: string;
   description: string;
+  longDescription: string;
+}
+
+interface VerbTypeOption {
+  id: VerbType;
+  label: string;
+  description: string;
+  longDescription: string;
+}
+
+interface TransitivityOption {
+  id: Transitivity;
+  label: string;
+  description: string;
+  longDescription: string;
 }
 
 export const tenseOptions: TenseOption[] = [
@@ -311,11 +327,62 @@ export const tenseOptions: TenseOption[] = [
 ];
 
 export const polarityOptions: PolarityOption[] = [
-  { id: "affirmative", label: "Affirmative", description: "肯定" },
-  { id: "negative", label: "Negative", description: "否定" },
+  {
+    id: "affirmative",
+    label: "Affirmative",
+    description: "肯定",
+    longDescription: "The affirmative form is the positive form of the verb, expressing that an action is done or a state exists. It's the basic form used in statements and questions."
+  },
+  {
+    id: "negative",
+    label: "Negative",
+    description: "否定",
+    longDescription: "The negative form expresses that an action is not done or a state does not exist. It's formed by adding ない (plain) or ません (polite) to the verb stem."
+  }
 ];
 
 export const formalityOptions: FormalityOption[] = [
-  { id: "plain", label: "Plain", description: "普通形" },
-  { id: "polite", label: "Polite", description: "丁寧形" },
+  {
+    id: "plain",
+    label: "Plain",
+    description: "普通体",
+    longDescription: "The plain form (だ/る) is used in casual situations, with friends, family, and in informal writing. It's the basic form of Japanese verbs and is used in subordinate clauses."
+  },
+  {
+    id: "polite",
+    label: "Polite",
+    description: "丁寧体",
+    longDescription: "The polite form (です/ます) is used in formal situations, with people you don't know well, and in business settings. It shows respect and is considered more appropriate in public situations."
+  }
 ];
+
+export const verbTypeOptions: VerbTypeOption[] = [
+  {
+    id: "godan",
+    label: "Godan",
+    description: "五段活用",
+    longDescription: "Godan verbs are the most common type of Japanese verb. They have five possible endings: -u, -ku, -gu, -su, -tsu. The ending changes depending on the verb stem."
+  },
+  {
+    id: "ichidan",
+    label: "Ichidan",
+    description: "一段活用",
+    longDescription: "Ichidan verbs are a type of Japanese verb that have only one possible ending. They are the simplest type of Japanese verb and are used in many everyday situations."
+  }
+];
+
+export const transitivityOptions: TransitivityOption[] = [
+  {
+    id: "transitive",
+    label: "Transitive",
+    description: "他動詞",
+    longDescription: "Transitive verbs take an object and are used to describe actions that can be done to or with an object."
+  },
+  {
+    id: "intransitive",
+    label: "Intransitive",
+    description: "自動詞",
+    longDescription: "Intransitive verbs do not take an object and are used to describe actions that are done without an object."
+  }
+];
+

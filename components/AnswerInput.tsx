@@ -38,6 +38,7 @@ export default function AnswerInput() {
 
   const handleSubmit = () => {
     if (canSubmit && !isCorrect && !showAnswer && inputValue.trim()) {
+      setInputValue(hiraganaValue);
       checkAnswer(inputValue);
     } else if (isCorrect || showAnswer) {
       newQuestion();
@@ -74,7 +75,7 @@ export default function AnswerInput() {
             onChange={handleInputChange}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                if (canSubmit && !isCorrect && !showAnswer) {
+                if (canSubmit && !isCorrect && !showAnswer && inputValue.trim()) {
                   handleSubmit();
                 } else if (isCorrect || showAnswer) {
                   handleSubmit();
@@ -102,7 +103,7 @@ export default function AnswerInput() {
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
-        {hiraganaValue && (
+        {hiraganaValue && !isCorrect && !showAnswer && (
           <p className="text-sm text-muted-foreground text-center mt-2">
             {hiraganaValue}
           </p>

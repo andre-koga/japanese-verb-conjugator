@@ -7,6 +7,8 @@ import type {
 import { allRules } from "@/lib/conjugation-rules";
 import { allVerbs } from "@/lib/jlpt-verbs";
 import { useGameStore } from "@/stores/gameStore";
+import { getFormKey } from "@/lib/types";
+import { getKanaForVowel, getTeTaKana, type VowelChange } from "@/lib/kana-mappings";
 
 export function getVerbStem(
   verb: JapaneseVerb,
@@ -19,73 +21,18 @@ export function getVerbStem(
   if (verb.type === "ichidan") {
     return [verb.dictionary.slice(0, -1), verb.kana.slice(0, -1)]; // Remove the final 'る'
   } else if (verb.type === "godan") {
-    const lastChar = verb.dictionary.slice(-1); // Get the last character
-
+    const lastChar = verb.kana.slice(-1); // Get the last character
     const base = verb.dictionary.slice(0, -1); // Get the part before the last char
     const kanaBase = verb.kana.slice(0, -1);
 
-    switch (godanVowel) {
-      case "a":
-        if (lastChar === "う") return [base + "わ", kanaBase + "わ"];
-        if (lastChar === "つ") return [base + "た", kanaBase + "た"];
-        return [
-          base + lastChar.replace(/u$/, "あ"),
-          kanaBase + lastChar.replace(/u$/, "あ"),
-        ];
-      case "i":
-        return [
-          base + lastChar.replace(/u$/, "い"),
-          kanaBase + lastChar.replace(/u$/, "い"),
-        ];
-      case "u":
-        return [verb.dictionary, verb.kana]; // Dictionary form is the 'u' stem
-      case "e":
-        return [
-          base + lastChar.replace(/u$/, "え"),
-          kanaBase + lastChar.replace(/u$/, "え"),
-        ];
-      case "o":
-        return [
-          base + lastChar.replace(/u$/, "お"),
-          kanaBase + lastChar.replace(/u$/, "お"),
-        ];
-      case "te":
-      case "ta":
-        //te and ta are special cases, handled together
-        if (lastChar === "う" || lastChar === "つ" || lastChar === "る") {
-          return [
-            base + (godanVowel === "te" ? "って" : "った"),
-            kanaBase + (godanVowel === "te" ? "って" : "った"),
-          ];
-        }
-        if (lastChar === "ぬ" || lastChar === "ぶ" || lastChar === "む") {
-          return [
-            base + (godanVowel === "te" ? "んで" : "んだ"),
-            kanaBase + (godanVowel === "te" ? "んで" : "んだ"),
-          ];
-        }
-        if (lastChar === "く") {
-          return [
-            base + (godanVowel === "te" ? "いて" : "いた"),
-            kanaBase + (godanVowel === "te" ? "いて" : "いた"),
-          ];
-        }
-        if (lastChar === "ぐ") {
-          return [
-            base + (godanVowel === "te" ? "いで" : "いだ"),
-            kanaBase + (godanVowel === "te" ? "いで" : "いだ"),
-          ];
-        }
-        if (lastChar === "す") {
-          return [
-            base + (godanVowel === "te" ? "して" : "した"),
-            kanaBase + (godanVowel === "te" ? "して" : "した"),
-          ];
-        }
-        return [verb.dictionary, verb.kana]; //Should not reach here
-      default:
-        return [verb.dictionary, verb.kana]; //handles the 'u' case, and also the default
+    if (godanVowel === "te" || godanVowel === "ta") {
+      const teTaKana = getTeTaKana(lastChar, godanVowel === "te");
+      return [base + teTaKana, kanaBase + teTaKana];
     }
+
+    const vowelChange = godanVowel as VowelChange;
+    const newKana = getKanaForVowel(lastChar, vowelChange);
+    return [base + newKana, kanaBase + newKana];
   } else if (verb.type === "irregular" && irregularStem) {
     return irregularStem(verb, godanVowel);
   }
@@ -115,17 +62,19 @@ export function conjugate(
 ): [string, string] {
   // Handle irregular verbs with pre-defined forms
   if (verb.type === "irregular") {
-    if (verb.irregularForms && verb.irregularForms.has(form)) {
-      return verb.irregularForms.get(form)!;
+    const formKey = getFormKey(form);
+    if (verb.irregularForms && verb.irregularForms.has(formKey)) {
+      return verb.irregularForms.get(formKey)!;
     }
-    console.log("No irregular form found for", verb.dictionary, form);
+    console.log("No irregular form found for", verb.dictionary, formKey);
     return [verb.dictionary, verb.kana];
   }
 
   // Get the rules for this form
-  const rules = allRules.get(form);
+  const formKey = getFormKey(form);
+  const rules = allRules.get(formKey);
   if (!rules) {
-    console.log("No rules found for", verb.dictionary, form);
+    console.log("No rules found for", verb.dictionary, formKey);
     return [verb.dictionary, verb.kana]; // Default to dictionary form if no rules found
   }
 

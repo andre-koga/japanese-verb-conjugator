@@ -18,66 +18,67 @@ import { passiveRules } from "@/lib/conjugation-rules/passive";
 import { potentialRules } from "@/lib/conjugation-rules/potential";
 import { progressiveRules } from "@/lib/conjugation-rules/progressive";
 import { volitionalRules } from "@/lib/conjugation-rules/volitional";
-import type { ConjugationForm, ConjugationRule } from "@/lib/types";
+import type { ConjugationRule } from "@/lib/types";
+import { getFormKey } from "@/lib/types";
 
 // Create a new Map to store all rules
-export const allRules = new Map<ConjugationForm, ConjugationRule[]>();
+export const allRules = new Map<string, ConjugationRule[]>();
 
 // Add rules from each module to the Map
 for (const [form, rules] of basicRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of shouldRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of mustRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of attemptiveRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of preparatoryRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of regrettableRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of givingRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of receivingRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of simultaneousRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of purposeGoingRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of purposeComingRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of causativeRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of conditionalRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of desireRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of imperativeRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of passiveRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of potentialRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of progressiveRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of volitionalRules) {
-  allRules.set(form, rules);
+  allRules.set(getFormKey(form), rules);
 }

@@ -125,11 +125,11 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 
   --correct-color: oklch(0.71 0.2121 142.81);
-  --n5-color: oklch(57.7% 0.245 27.325);
-  --n4-color: oklch(62.3% 0.214 259.815);
-  --n3-color: oklch(62.7% 0.194 149.214);
-  --n2-color: oklch(75% 0.183 55.934);
-  --n1-color: oklch(65.6% 0.241 354.308);
+  --n5-color: oklch(0.54 0.2255 27.325);
+  --n4-color: oklch(0.54 0.2178 259.815);
+  --n3-color: oklch(0.55 0.194 149.214);
+  --n2-color: oklch(0.65 0.1651 55.934);
+  --n1-color: oklch(0.57 0.2332 354.308);
 }
 
 :root {
