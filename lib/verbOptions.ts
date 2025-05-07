@@ -46,7 +46,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "teForm",
+    id: "te form",
     label: "Te-form",
     description: "て形",
     essential: true,
@@ -112,7 +112,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "conditionalBa",
+    id: "conditional ba",
     label: "Conditional (Ba)",
     description: "ば形",
     essential: false,
@@ -123,7 +123,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "conditionalTara",
+    id: "conditional tara",
     label: "Conditional (Tara)",
     description: "たら形",
     essential: true,
@@ -156,7 +156,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "causativePassive",
+    id: "causative passive",
     label: "Causative-Passive",
     description: "使役受身形",
     essential: false,
@@ -167,7 +167,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "conditionalNara",
+    id: "conditional nara",
     label: "Conditional (Nara)",
     description: "なら形",
     essential: false,
@@ -178,7 +178,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "conditionalTo",
+    id: "conditional to",
     label: "Provisional (To)",
     description: "と形",
     essential: false,
@@ -266,7 +266,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "receivingFavor",
+    id: "receiving favor",
     label: "Receiving Favor",
     description: "てくれる形",
     essential: false,
@@ -288,7 +288,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "purposeGoing",
+    id: "purpose going",
     label: "Purpose (Going)",
     description: "に行く形",
     essential: false,
@@ -299,7 +299,7 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "purposeComing",
+    id: "purpose coming",
     label: "Purpose (Coming)",
     description: "に来る形",
     essential: false,

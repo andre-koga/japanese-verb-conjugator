@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import type { JLPTLevel } from "@/lib/types";
 import { JLPTColor } from "@/lib/utils";
-import { JLPTLevels } from "@/lib/selectorConfig";
+import { JLPTLevels } from "@/lib/config/selectorConst";
 import {
   Tooltip,
   TooltipContent,

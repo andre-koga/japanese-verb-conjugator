@@ -63,19 +63,19 @@ export interface ConjugationRule {
 export type Tense =
   | "present"
   | "past"
-  | "teForm"
+  | "te form"
   | "potential"
   | "passive"
   | "causative"
   | "imperative"
   | "volitional"
-  | "conditionalBa"
-  | "conditionalTara"
+  | "conditional ba"
+  | "conditional tara"
   | "progressive"
   | "desire"
-  | "causativePassive"
-  | "conditionalNara"
-  | "conditionalTo"
+  | "causative passive"
+  | "conditional nara"
+  | "conditional to"
   | "should"
   | "must"
   | "attemptive"
@@ -83,10 +83,10 @@ export type Tense =
   | "regrettable"
   | "giving"
   | "receiving"
-  | "receivingFavor"
+  | "receiving favor"
   | "simultaneous"
-  | "purposeGoing"
-  | "purposeComing";
+  | "purpose going"
+  | "purpose coming";
 
 export type TenseGroup = {
   isEssential: boolean;

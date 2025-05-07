@@ -1,4 +1,4 @@
-import type { JLPTLevelData, TenseGroup } from "./types";
+import type { JLPTLevelData, TenseGroup } from "../types";
 
 export const JLPTLevels: readonly JLPTLevelData[] = [
     {

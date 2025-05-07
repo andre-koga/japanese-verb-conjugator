@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Formality, JLPTLevel, Polarity, Tense } from "@/lib/types";
 import { conjugator } from "@/lib/conjugation";
+import { initialState } from "@/lib/config/gameConfig";
 
 interface Verb {
   dictionaryForm: string;
@@ -51,25 +52,6 @@ interface GameState {
   resetGame: () => void;
   clearStorage: () => void; // Clear all storage and reset to defaults
 }
-
-// Initial state values to use for both initialization and reset
-const initialState = {
-  selectedTenses: ["present" as Tense],
-  tense: "present" as Tense,
-  selectedPolarities: ["affirmative" as Polarity],
-  polarity: "affirmative" as Polarity,
-  selectedFormalities: ["plain" as Formality],
-  formality: "plain" as Formality,
-  JLPTLevel: "N5" as JLPTLevel,
-  enabledJLPTLevels: ["N5" as JLPTLevel],
-  showOptionsMenu: true,
-  currentVerb: null,
-  isCorrect: false,
-  showAnswer: false,
-  score: 0,
-  totalQuestions: 0,
-  tenseStats: {},
-};
 
 const useGameStore = create<GameState>()(
   persist(

@@ -11,7 +11,7 @@ import { Tense } from "@/lib/types";
 import { Label } from "@/components/ui/label";
 import { InfoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { essentialGroups } from "@/lib/selectorConfig";
+import { essentialGroups } from "@/lib/config/selectorConst";
 
 export default function TenseSelector() {
   const { selectedTenses, setSelectedTenses } = useGameStore();
