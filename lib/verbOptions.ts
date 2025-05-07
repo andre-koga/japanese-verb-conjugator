@@ -4,10 +4,9 @@ interface TenseOption {
   id: Tense;
   label: string;
   description: string;
-  essential: boolean;
-  longDescription: string; // Add detailed explanation of what the form is used for
-  hasFormality: boolean; // Whether this tense has formality variations
-  hasPolarity: boolean; // Whether this tense has polarity variations
+  longDescription: string;
+  hasFormality: boolean;
+  hasPolarity: boolean;
 }
 
 interface PolarityOption {
@@ -43,7 +42,6 @@ export const tenseOptions: TenseOption[] = [
     id: "present",
     label: "Present",
     description: "現在形",
-    essential: true,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
@@ -51,10 +49,19 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
+    id: "te form",
+    label: "Te-form",
+    description: "て形",
+    hasFormality: false,
+    hasPolarity: false,
+    longDescription:
+      "The te-form is a versatile connecting form used to link verbs, create requests, show ongoing actions, and form many compound verbs.",
+  },
+
+  {
     id: "past",
     label: "Past",
     description: "過去形",
-    essential: true,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
@@ -62,21 +69,39 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "te form",
-    label: "Te-form",
-    description: "て形",
-    essential: true,
-    hasFormality: false,
+    id: "past presumptive",
+    label: "Past Presumptive",
+    description: "過去推量形",
+    hasFormality: true,
     hasPolarity: true,
     longDescription:
-      "The te-form is a versatile connecting form used to link verbs, create requests, show ongoing actions, and form many compound verbs.",
+      "The past presumptive form expresses conjecture about past events, similar to 'must have' or 'probably' in English.",
+  },
+
+  {
+    id: "progressive",
+    label: "Progressive",
+    description: "ている形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      "The progressive form indicates ongoing actions or states. It combines the te-form with iru/imasu and can also show resultant states.",
+  },
+
+  {
+    id: "past progressive",
+    label: "Past Progressive",
+    description: "ていた形",
+    hasFormality: true,
+    hasPolarity: true,
+    longDescription:
+      "The past progressive form indicates actions or states that were ongoing in the past. It's formed by conjugating the progressive form into the past tense.",
   },
 
   {
     id: "potential",
     label: "Potential",
     description: "可能形",
-    essential: true,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
@@ -87,7 +112,6 @@ export const tenseOptions: TenseOption[] = [
     id: "passive",
     label: "Passive",
     description: "受身形",
-    essential: false,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
@@ -98,7 +122,6 @@ export const tenseOptions: TenseOption[] = [
     id: "causative",
     label: "Causative",
     description: "使役形",
-    essential: false,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
@@ -109,7 +132,6 @@ export const tenseOptions: TenseOption[] = [
     id: "imperative",
     label: "Imperative",
     description: "命令形",
-    essential: true,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
@@ -117,21 +139,19 @@ export const tenseOptions: TenseOption[] = [
   },
 
   {
-    id: "volitional",
-    label: "Volitional",
+    id: "presumptive",
+    label: "Presumptive",
     description: "意向形",
-    essential: true,
     hasFormality: true,
     hasPolarity: true,
     longDescription:
-      'The volitional form expresses intention or invitation, similar to "let\'s" or "I will" in English. It\'s commonly used for suggesting activities.',
+      'The presumptive form expresses intention or conjecture, similar to "let\'s" or "probably" in English. It\'s commonly used for suggesting activities or expressing likelihood.',
   },
 
   {
     id: "conditional ba",
     label: "Conditional (Ba)",
     description: "ば形",
-    essential: false,
     hasFormality: false,
     hasPolarity: true,
     longDescription:
@@ -142,187 +162,10 @@ export const tenseOptions: TenseOption[] = [
     id: "conditional tara",
     label: "Conditional (Tara)",
     description: "たら形",
-    essential: true,
     hasFormality: false,
     hasPolarity: true,
     longDescription:
       'The tara-conditional is used for "if/when" conditions with a sequential nuance. It\'s often used for unexpected discoveries or future uncertainties.',
-  },
-
-  {
-    id: "progressive",
-    label: "Progressive",
-    description: "ている形",
-    essential: true,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The progressive form indicates ongoing actions or states. It combines the te-form with iru/imasu and can also show resultant states.",
-  },
-
-  {
-    id: "desire",
-    label: "Desire",
-    description: "たい形",
-    essential: true,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The desire form expresses wants and wishes. It's formed by adding -tai to the verb stem and behaves like an i-adjective.",
-  },
-
-  {
-    id: "causative passive",
-    label: "Causative-Passive",
-    description: "使役受身形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The causative-passive form indicates being made to do something, often with a nuance of inconvenience or annoyance.",
-  },
-
-  {
-    id: "conditional nara",
-    label: "Conditional (Nara)",
-    description: "なら形",
-    essential: false,
-    hasFormality: false,
-    hasPolarity: true,
-    longDescription:
-      'The nara-conditional is used for situational conditions ("if that\'s the case") and often refers to information just learned.',
-  },
-
-  {
-    id: "conditional to",
-    label: "Provisional (To)",
-    description: "と形",
-    essential: false,
-    hasFormality: false,
-    hasPolarity: true,
-    longDescription:
-      'The to-conditional expresses automatic or natural results, like "if A happens, B will naturally follow." It cannot be used with commands or requests.',
-  },
-
-  {
-    id: "should",
-    label: "Should",
-    description: "べき形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      'The should form expresses moral or social obligation. It uses べき and is often translated as "should" or "ought to."',
-  },
-
-  {
-    id: "must",
-    label: "Must",
-    description: "なければならない形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The must form expresses necessity or obligation. It uses なければならない and indicates something that must be done.",
-  },
-
-  {
-    id: "attemptive",
-    label: "Attemptive",
-    description: "てみる形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The attemptive form expresses trying or attempting to do something. It combines the te-form with みる (to see/try).",
-  },
-
-  {
-    id: "preparatory",
-    label: "Preparatory",
-    description: "ておく形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The preparatory form expresses doing something in advance or preparation. It combines the te-form with おく (to put).",
-  },
-
-  {
-    id: "regrettable",
-    label: "Regrettable",
-    description: "てしまう形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The regrettable form expresses doing something completely or with regret. It combines the te-form with しまう (to finish).",
-  },
-
-  {
-    id: "giving",
-    label: "Giving",
-    description: "てあげる形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The giving form expresses doing something for someone else. It combines the te-form with あげる (to give).",
-  },
-
-  {
-    id: "receiving",
-    label: "Receiving",
-    description: "てもらう形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The receiving form expresses having someone do something for you. It combines the te-form with もらう (to receive).",
-  },
-
-  {
-    id: "receiving favor",
-    label: "Receiving Favor",
-    description: "てくれる形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The receiving favor form expresses someone doing something for you. It combines the te-form with くれる (to give to me).",
-  },
-
-  {
-    id: "simultaneous",
-    label: "Simultaneous",
-    description: "ながら形",
-    essential: false,
-    hasFormality: false,
-    hasPolarity: true,
-    longDescription:
-      "The simultaneous form expresses doing two actions at the same time. It attaches ながら to the verb stem (masu-stem).",
-  },
-
-  {
-    id: "purpose going",
-    label: "Purpose (Going)",
-    description: "に行く形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The purpose going form expresses going somewhere to do something. It combines the plain form with に行く (to go).",
-  },
-
-  {
-    id: "purpose coming",
-    label: "Purpose (Coming)",
-    description: "に来る形",
-    essential: false,
-    hasFormality: true,
-    hasPolarity: true,
-    longDescription:
-      "The purpose coming form expresses coming somewhere to do something. It combines the plain form with に来る (to come).",
   },
 ];
 

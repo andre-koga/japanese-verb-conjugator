@@ -12,7 +12,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { tenseOptions, polarityOptions, formalityOptions, verbTypeOptions, transitivityOptions } from "@/lib/verbOptions";
+import {
+  tenseOptions,
+  polarityOptions,
+  formalityOptions,
+  verbTypeOptions,
+  transitivityOptions,
+} from "@/lib/verbOptions";
 
 export default function VerbDisplay() {
   const { currentVerb, tense, polarity, formality, showAnswer, isCorrect } =
@@ -24,6 +30,8 @@ export default function VerbDisplay() {
     showAnswer && !isCorrect
       ? conjugate(currentVerb, { tense, polarity, formality })
       : null;
+
+  const currentTenseOption = tenseOptions.find((t) => t.id === tense);
 
   return (
     <Card>
@@ -47,24 +55,43 @@ export default function VerbDisplay() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Badge variant="secondary" className="text-muted-foreground border border-muted-foreground/50">
+                  <Badge
+                    variant="secondary"
+                    className="text-muted-foreground border-muted-foreground/50 border"
+                  >
                     {currentVerb.type === "godan" ? "五段" : "一段"}
                   </Badge>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-72">
-                  <p>{verbTypeOptions.find(t => t.id === currentVerb.type)?.longDescription}</p>
+                  <p>
+                    {
+                      verbTypeOptions.find((t) => t.id === currentVerb.type)
+                        ?.longDescription
+                    }
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Badge variant="secondary" className="text-muted-foreground border border-muted-foreground/50">
-                    {currentVerb.transitivity === "transitive" ? "他動詞" : "自動詞"}
+                  <Badge
+                    variant="secondary"
+                    className="text-muted-foreground border-muted-foreground/50 border"
+                  >
+                    {currentVerb.transitivity === "transitive"
+                      ? "他動詞"
+                      : "自動詞"}
                   </Badge>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-72">
-                  <p>{transitivityOptions.find(t => t.id === currentVerb.transitivity)?.longDescription}</p>
+                  <p>
+                    {
+                      transitivityOptions.find(
+                        (t) => t.id === currentVerb.transitivity,
+                      )?.longDescription
+                    }
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -88,50 +115,71 @@ export default function VerbDisplay() {
                     </Badge>
                   </TooltipTrigger>
                   <TooltipContent className="max-w-72">
-                    <p>{tenseOptions.find(t => t.id === tense)?.longDescription}</p>
+                    <p>
+                      {
+                        tenseOptions.find((t) => t.id === tense)
+                          ?.longDescription
+                      }
+                    </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
 
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-muted-foreground text-sm">Form</span>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Badge variant="outline" className="text-sm">
-                      {polarity}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-72">
-                    <p>{polarityOptions.find(p => p.id === polarity)?.longDescription}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+            {currentTenseOption?.hasPolarity && (
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-muted-foreground text-sm">Polarity</span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="outline" className="text-sm">
+                        {polarity}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-72">
+                      <p>
+                        {
+                          polarityOptions.find((p) => p.id === polarity)
+                            ?.longDescription
+                        }
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
 
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-muted-foreground text-sm">Speech</span>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Badge variant="outline" className="text-sm">
-                      {formality}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-72">
-                    <p>{formalityOptions.find(f => f.id === formality)?.longDescription}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+            {currentTenseOption?.hasFormality && (
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-muted-foreground text-sm">Formality</span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="outline" className="text-sm">
+                        {formality}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-72">
+                      <p>
+                        {
+                          formalityOptions.find((f) => f.id === formality)
+                            ?.longDescription
+                        }
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Correct Answer Display */}
         {correctAnswer && (
           <div className="text-destructive">
-            <p className="text-muted-foreground text-sm mb-4">Correct Answer:</p>
+            <p className="text-muted-foreground mb-4 text-sm">
+              Correct Answer:
+            </p>
             <p className="text-muted-foreground m-0 p-0 text-xs">
               {correctAnswer[1]}
             </p>

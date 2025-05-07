@@ -12,6 +12,7 @@ import { conjugate, checkAnswer } from "@/lib/conjugation";
 import { initialState } from "@/lib/config/gameConfig";
 import { allVerbs } from "@/lib/jlpt-verbs";
 import { toHiragana } from "hepburn";
+import { tenseOptions } from "@/lib/verbOptions";
 
 const useGameStore = create<GameState>()(
   persist(
@@ -85,17 +86,30 @@ const useGameStore = create<GameState>()(
         );
         const randomTense = selectedTenses[randomTenseIndex];
 
-        // Get a random polarity from the selected polarities
-        const randomPolarityIndex = Math.floor(
-          Math.random() * selectedPolarities.length,
-        );
-        const randomPolarity = selectedPolarities[randomPolarityIndex];
+        // Get the tense option to check its capabilities
+        const tenseOption = tenseOptions.find(t => t.id === randomTense);
+        if (!tenseOption) {
+          console.error("Invalid tense:", randomTense);
+          return;
+        }
 
-        // Get a random formality from the selected formalities
-        const randomFormalityIndex = Math.floor(
-          Math.random() * selectedFormalities.length,
-        );
-        const randomFormality = selectedFormalities[randomFormalityIndex];
+        // Only select polarity if the tense supports it
+        let randomPolarity = "affirmative" as Polarity;
+        if (tenseOption.hasPolarity) {
+          const randomPolarityIndex = Math.floor(
+            Math.random() * selectedPolarities.length,
+          );
+          randomPolarity = selectedPolarities[randomPolarityIndex];
+        }
+
+        // Only select formality if the tense supports it
+        let randomFormality = "plain" as Formality;
+        if (tenseOption.hasFormality) {
+          const randomFormalityIndex = Math.floor(
+            Math.random() * selectedFormalities.length,
+          );
+          randomFormality = selectedFormalities[randomFormalityIndex];
+        }
 
         // Update the current tense, polarity, and formality
         set({

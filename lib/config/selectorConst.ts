@@ -1,4 +1,4 @@
-import type { JLPTLevelData, TenseGroup } from "../types";
+import type { JLPTLevelData } from "../types";
 
 export const JLPTLevels: readonly JLPTLevelData[] = [
   {
@@ -34,18 +34,5 @@ export const JLPTLevels: readonly JLPTLevelData[] = [
     difficulty: "Advanced",
     description:
       "Comprehensive understanding of Japanese in a wide range of situations",
-  },
-] as const;
-
-export const essentialGroups: readonly TenseGroup[] = [
-  {
-    isEssential: true,
-    label: "Essential Forms",
-    description: "Core grammar patterns for basic communication",
-  },
-  {
-    isEssential: false,
-    label: "Extended Forms",
-    description: "Additional patterns for nuanced expression",
   },
 ] as const;

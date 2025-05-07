@@ -8,7 +8,8 @@ import { pastPresumptiveRules } from "@/lib/conjugation-rules/past-presumptive";
 import { pastProgressiveRules } from "@/lib/conjugation-rules/past-progressive";
 import { potentialRules } from "@/lib/conjugation-rules/potential";
 import { progressiveRules } from "@/lib/conjugation-rules/progressive";
-import { volitionalRules } from "@/lib/conjugation-rules/volitional";
+import { presumptiveRules } from "@/lib/conjugation-rules/presumptive";
+import { teFormRules } from "@/lib/conjugation-rules/te-form";
 import type { ConjugationRule } from "@/lib/types";
 import { getFormKey } from "@/lib/types";
 
@@ -17,6 +18,9 @@ export const allRules = new Map<string, ConjugationRule[]>();
 
 // Add rules from each module to the Map
 for (const [form, rules] of basicRules) {
+  allRules.set(getFormKey(form), rules);
+}
+for (const [form, rules] of teFormRules) {
   allRules.set(getFormKey(form), rules);
 }
 for (const [form, rules] of causativeRules) {
@@ -43,6 +47,9 @@ for (const [form, rules] of potentialRules) {
 for (const [form, rules] of progressiveRules) {
   allRules.set(getFormKey(form), rules);
 }
-for (const [form, rules] of volitionalRules) {
+for (const [form, rules] of presumptiveRules) {
+  allRules.set(getFormKey(form), rules);
+}
+for (const [form, rules] of teFormRules) {
   allRules.set(getFormKey(form), rules);
 }

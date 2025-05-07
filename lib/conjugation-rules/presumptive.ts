@@ -5,7 +5,7 @@ import type {
 } from "@/lib/types";
 import { getVerbStem, addVerbEnding } from "@/lib/conjugation";
 
-export const volitionalRules: Map<ConjugationForm, ConjugationRule[]> = new Map(
+export const presumptiveRules: Map<ConjugationForm, ConjugationRule[]> = new Map(
   [
     [
       {

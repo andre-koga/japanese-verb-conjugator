@@ -73,13 +73,8 @@ export type Tense =
   | "conditional tara"
   | "potential"
   | "causative"
-  | "passive";
-
-export type TenseGroup = {
-  isEssential: boolean;
-  label: string;
-  description: string;
-};
+  | "passive"
+  | "te form";
 
 export interface TenseStats {
   correct: number;
