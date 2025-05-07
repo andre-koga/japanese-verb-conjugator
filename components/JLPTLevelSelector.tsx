@@ -75,7 +75,7 @@ export default function JLPTLevelSelector() {
                   >
                     <span className="flex items-center gap-1">
                       {level.label}
-                      <Label className="text-xs opacity-70 font-normal">
+                      <Label className="text-xs font-normal opacity-70">
                         {level.difficulty}
                       </Label>
                     </span>
@@ -92,7 +92,7 @@ export default function JLPTLevelSelector() {
           })}
         </TooltipProvider>
       </div>
-      <div className="text-xs text-muted-foreground">
+      <div className="text-muted-foreground text-xs">
         {enabledJLPTLevels.length} of {JLPTLevels.length} selected
         <span className="ml-2 italic">
           (Note: Only N5 is currently available)

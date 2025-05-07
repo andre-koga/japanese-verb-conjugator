@@ -74,12 +74,12 @@ export default function TenseSelector() {
             key={group.isEssential ? "essential" : "nonEssential"}
             className="space-y-2"
           >
-            <h3 className="text-sm font-medium flex items-center flex-wrap">
+            <h3 className="flex flex-wrap items-center text-sm font-medium">
               {group.label}
-              <Label className="text-xs opacity-70 font-normal ml-2">
+              <Label className="ml-2 text-xs font-normal opacity-70">
                 {group.description}
               </Label>
-              <span className="text-xs text-muted-foreground ml-2 hidden sm:block">
+              <span className="text-muted-foreground ml-2 hidden text-xs sm:block">
                 (
                 {
                   tensesByEssential[
@@ -90,7 +90,7 @@ export default function TenseSelector() {
               </span>
             </h3>
 
-            <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2">
+            <div className="grid grid-cols-1 space-y-2 gap-x-2 sm:grid-cols-2 md:grid-cols-3">
               {tensesByEssential[
                 group.isEssential ? "essential" : "nonEssential"
               ].map((tense) => (
@@ -104,10 +104,10 @@ export default function TenseSelector() {
                     <div className="flex gap-2">
                       <Label
                         htmlFor={`tense-${tense.id}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        className="cursor-pointer text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         {tense.label}
-                        <span className="ml-1 text-xs text-muted-foreground">
+                        <span className="text-muted-foreground ml-1 text-xs">
                           {tense.description}
                         </span>
                       </Label>
@@ -133,7 +133,7 @@ export default function TenseSelector() {
         ))}
       </TooltipProvider>
 
-      <div className="text-xs text-muted-foreground -mt-2">
+      <div className="text-muted-foreground -mt-2 text-xs">
         {selectedTenses.length} of {tenseOptions.length} selected
       </div>
     </div>

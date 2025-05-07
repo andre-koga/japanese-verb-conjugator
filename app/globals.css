@@ -41,6 +41,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  --color-correct: var(--correct-color);
   --color-n5: var(--n5-color);
   --color-n4: var(--n4-color);
   --color-n3: var(--n3-color);
@@ -82,6 +83,7 @@
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
 
+  --correct-color: oklch(0.71 0.2121 142.81);
   --n5-color: oklch(54.6% 0.245 262.881);
   --n4-color: oklch(70% 0.19 157.5);
   --n3-color: oklch(72% 0.22 55);
@@ -122,6 +124,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
 
+  --correct-color: oklch(0.71 0.2121 142.81);
   --n5-color: oklch(54.6% 0.245 262.881);
   --n4-color: oklch(70% 0.19 157.5);
   --n3-color: oklch(72% 0.22 55);

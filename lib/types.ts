@@ -10,7 +10,7 @@ export type ConjugationForm = {
 };
 
 // Create a type for irregular verb forms that only requires exceptions
-type IrregularVerbForms = Map<ConjugationForm, string>;
+type IrregularVerbForms = Map<ConjugationForm, [string, string]>;
 
 export type GodanVowel = "a" | "i" | "u" | "e" | "o" | "te" | "ta";
 
@@ -19,7 +19,12 @@ export type JLPTLevel = "N5" | "N4" | "N3" | "N2" | "N1";
 export type JLPTLevelData = {
   id: JLPTLevel;
   label: string;
-  difficulty: "Beginner" | "Basic" | "Intermediate" | "Pre-Advanced" | "Advanced";
+  difficulty:
+    | "Beginner"
+    | "Basic"
+    | "Intermediate"
+    | "Pre-Advanced"
+    | "Advanced";
   description: string;
 };
 
@@ -34,8 +39,6 @@ export type VerbEnding =
   | "mu"
   | "ru";
 
-export type SoundChange = "a" | "i" | "e" | "o" | "te";
-
 export type Polarity = "affirmative" | "negative";
 
 export type Formality = "plain" | "polite";
@@ -43,26 +46,26 @@ export type Formality = "plain" | "polite";
 // Create a discriminated union type for JapaneseVerb
 export type JapaneseVerb =
   | {
-    dictionary: string;
-    kana: string;
-    meaning: string;
-    type: VerbType;
-    transitivity?: Transitivity;
-    JLPTLevel?: JLPTLevel;
-  }
+      dictionary: string;
+      kana: string;
+      meaning: string;
+      type: VerbType;
+      transitivity?: Transitivity;
+      JLPTLevel?: JLPTLevel;
+    }
   | {
-    dictionary: string;
-    kana: string;
-    meaning: string;
-    type: "irregular";
-    irregularForms: IrregularVerbForms;
-    regularPattern: VerbType;
-    transitivity?: Transitivity;
-    JLPTLevel?: JLPTLevel;
-  };
+      dictionary: string;
+      kana: string;
+      meaning: string;
+      type: "irregular";
+      irregularForms: IrregularVerbForms;
+      regularPattern: VerbType;
+      transitivity?: Transitivity;
+      JLPTLevel?: JLPTLevel;
+    };
 
 export interface ConjugationRule {
-  transform: (verb: JapaneseVerb) => string;
+  transform: (verb: JapaneseVerb) => [string, string];
 }
 
 export type Tense =

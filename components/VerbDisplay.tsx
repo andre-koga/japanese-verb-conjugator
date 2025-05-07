@@ -20,10 +20,10 @@ export default function VerbDisplay() {
 
   return (
     <Card>
-      <CardContent className="text-center space-y-6">
+      <CardContent className="space-y-6 text-center">
         {/* Verb Information */}
         <div className="space-y-2">
-          <p className="text-xs text-muted-foreground p-0 m-0">
+          <p className="text-muted-foreground m-0 p-0 text-xs">
             {currentVerb.kana}
           </p>
           <h2 className="text-xl font-bold">{currentVerb.dictionary} </h2>
@@ -44,28 +44,28 @@ export default function VerbDisplay() {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-border w-3/4 mx-auto"></div>
+        <div className="bg-border mx-auto h-px w-3/4"></div>
 
         {/* Instructions */}
         <div className="space-y-3">
           <h2 className="font-medium">Conjugate To:</h2>
           <div className="flex flex-wrap justify-center gap-4">
             <div className="flex flex-col items-center gap-1">
-              <span className="text-sm text-muted-foreground">Tense</span>
+              <span className="text-muted-foreground text-sm">Tense</span>
               <Badge variant="outline" className="text-sm">
                 {tense}
               </Badge>
             </div>
 
             <div className="flex flex-col items-center gap-1">
-              <span className="text-sm text-muted-foreground">Form</span>
+              <span className="text-muted-foreground text-sm">Form</span>
               <Badge variant="outline" className="text-sm">
                 {polarity}
               </Badge>
             </div>
 
             <div className="flex flex-col items-center gap-1">
-              <span className="text-sm text-muted-foreground">Speech</span>
+              <span className="text-muted-foreground text-sm">Speech</span>
               <Badge variant="outline" className="text-sm">
                 {formality}
               </Badge>
@@ -76,8 +76,11 @@ export default function VerbDisplay() {
         {/* Correct Answer Display */}
         {correctAnswer && (
           <div className="text-destructive">
-            <p className="text-sm text-muted-foreground">Correct Answer:</p>
-            <p className="text-lg font-medium">{correctAnswer}</p>
+            <p className="text-muted-foreground text-sm mb-4">Correct Answer:</p>
+            <p className="text-muted-foreground m-0 p-0 text-xs">
+              {correctAnswer[1]}
+            </p>
+            <p className="text-xl font-medium">{correctAnswer[0]}</p>
           </div>
         )}
 
@@ -89,7 +92,7 @@ export default function VerbDisplay() {
           title="Look up on Jisho.org"
         >
           <Button variant="ghost" size="sm">
-            <ExternalLink className="h-4 w-4 mr-2" />
+            <ExternalLink className="mr-2 h-4 w-4" />
             <span>Look up on Jisho</span>
           </Button>
         </Link>

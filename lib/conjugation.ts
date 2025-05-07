@@ -11,55 +11,93 @@ import { useGameStore } from "@/stores/gameStore";
 export function getVerbStem(
   verb: JapaneseVerb,
   godanVowel?: GodanVowel,
-  irregularStem?: (verb: JapaneseVerb, godanVowel?: GodanVowel) => string,
-): string {
-
+  irregularStem?: (
+    verb: JapaneseVerb,
+    godanVowel?: GodanVowel,
+  ) => [string, string],
+): [string, string] {
   if (verb.type === "ichidan") {
-    return verb.dictionary.slice(0, -1); // Remove the final 'る'
+    return [verb.dictionary.slice(0, -1), verb.kana.slice(0, -1)]; // Remove the final 'る'
   } else if (verb.type === "godan") {
     const lastChar = verb.dictionary.slice(-1); // Get the last character
-    const base = verb.dictionary.slice(0, -1);    // Get the part before the last char
+
+    const base = verb.dictionary.slice(0, -1); // Get the part before the last char
+    const kanaBase = verb.kana.slice(0, -1);
 
     switch (godanVowel) {
       case "a":
-        if (lastChar === "う") return base + "わ";
-        if (lastChar === "つ") return base + "た";
-        return base + lastChar.replace(/u$/, "あ");
+        if (lastChar === "う") return [base + "わ", kanaBase + "わ"];
+        if (lastChar === "つ") return [base + "た", kanaBase + "た"];
+        return [
+          base + lastChar.replace(/u$/, "あ"),
+          kanaBase + lastChar.replace(/u$/, "あ"),
+        ];
       case "i":
-        return base + lastChar.replace(/u$/, "い");
+        return [
+          base + lastChar.replace(/u$/, "い"),
+          kanaBase + lastChar.replace(/u$/, "い"),
+        ];
       case "u":
-        return verb.dictionary; // Dictionary form is the 'u' stem
+        return [verb.dictionary, verb.kana]; // Dictionary form is the 'u' stem
       case "e":
-        return base + lastChar.replace(/u$/, "え");
+        return [
+          base + lastChar.replace(/u$/, "え"),
+          kanaBase + lastChar.replace(/u$/, "え"),
+        ];
       case "o":
-        return base + lastChar.replace(/u$/, "お");
+        return [
+          base + lastChar.replace(/u$/, "お"),
+          kanaBase + lastChar.replace(/u$/, "お"),
+        ];
       case "te":
       case "ta":
         //te and ta are special cases, handled together
         if (lastChar === "う" || lastChar === "つ" || lastChar === "る") {
-          return base + (godanVowel === "te" ? "って" : "った");
+          return [
+            base + (godanVowel === "te" ? "って" : "った"),
+            kanaBase + (godanVowel === "te" ? "って" : "った"),
+          ];
         }
         if (lastChar === "ぬ" || lastChar === "ぶ" || lastChar === "む") {
-          return base + (godanVowel === "te" ? "んで" : "んだ");
+          return [
+            base + (godanVowel === "te" ? "んで" : "んだ"),
+            kanaBase + (godanVowel === "te" ? "んで" : "んだ"),
+          ];
         }
         if (lastChar === "く") {
-          return base + (godanVowel === "te" ? "いて" : "いた");
+          return [
+            base + (godanVowel === "te" ? "いて" : "いた"),
+            kanaBase + (godanVowel === "te" ? "いて" : "いた"),
+          ];
         }
         if (lastChar === "ぐ") {
-          return base + (godanVowel === "te" ? "いで" : "いだ");
+          return [
+            base + (godanVowel === "te" ? "いで" : "いだ"),
+            kanaBase + (godanVowel === "te" ? "いで" : "いだ"),
+          ];
         }
         if (lastChar === "す") {
-          return base + (godanVowel === "te" ? "して" : "した");
+          return [
+            base + (godanVowel === "te" ? "して" : "した"),
+            kanaBase + (godanVowel === "te" ? "して" : "した"),
+          ];
         }
-        return ""; //Should not reach here
+        return [verb.dictionary, verb.kana]; //Should not reach here
       default:
-        return verb.dictionary; //handles the 'u' case, and also the default
+        return [verb.dictionary, verb.kana]; //handles the 'u' case, and also the default
     }
   } else if (verb.type === "irregular" && irregularStem) {
     return irregularStem(verb, godanVowel);
   }
 
-  return verb.dictionary; // Default fallback
+  return [verb.dictionary, verb.kana]; // Default fallback
+}
+
+export function addVerbEnding(
+  verbStems: [string, string],
+  ending: string,
+): [string, string] {
+  return [verbStems[0] + ending, verbStems[1] + ending];
 }
 
 export function checkAnswer(expected: string, actual: string): boolean {
@@ -74,20 +112,21 @@ export function checkAnswer(expected: string, actual: string): boolean {
 export function conjugate(
   verb: JapaneseVerb,
   form: ConjugationForm,
-): string {
+): [string, string] {
   // Handle irregular verbs with pre-defined forms
   if (verb.type === "irregular") {
     if (verb.irregularForms && verb.irregularForms.has(form)) {
       return verb.irregularForms.get(form)!;
     }
     console.log("No irregular form found for", verb.dictionary, form);
-    return verb.dictionary;
+    return [verb.dictionary, verb.kana];
   }
 
   // Get the rules for this form
   const rules = allRules.get(form);
   if (!rules) {
-    return verb.dictionary; // Default to dictionary form if no rules found
+    console.log("No rules found for", verb.dictionary, form);
+    return [verb.dictionary, verb.kana]; // Default to dictionary form if no rules found
   }
 
   // Apply the first rule
@@ -100,7 +139,9 @@ export function findVerb(dictionary: string): JapaneseVerb | undefined {
 
   // Search through all selected levels
   for (const level of selectedLevels) {
-    const verb = allVerbs[level as keyof typeof allVerbs].find((v: JapaneseVerb) => v.dictionary === dictionary);
+    const verb = allVerbs[level as keyof typeof allVerbs].find(
+      (v: JapaneseVerb) => v.dictionary === dictionary,
+    );
     if (verb) return verb;
   }
   return undefined;

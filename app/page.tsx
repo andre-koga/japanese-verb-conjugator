@@ -9,7 +9,6 @@ import PolaritySelector from "@/components/PolaritySelector";
 import FormalitySelector from "@/components/FormalitySelector";
 import DictionaryFormAlert from "@/components/DictionaryFormAlert";
 import AnswerInput from "@/components/AnswerInput";
-import NextButton from "@/components/NextButton";
 import TenseExplanation from "@/components/TenseExplanation";
 import ScoreDisplay from "@/components/ScoreDisplay";
 import { useGameStore } from "@/stores/gameStore";
@@ -40,7 +39,7 @@ export default function Home() {
     <div className="min-h-screen space-y-4">
       <PageTitle title="日本語動詞活用練習" subtitle="Conjugation Practice" />
 
-      <div className="rounded-lg space-y-8">
+      <div className="space-y-8 rounded-lg">
         {/* Show options when showOptionsMenu is true */}
         {showOptionsMenu && (
           <>
@@ -83,19 +82,18 @@ export default function Home() {
           <>
             <VerbDisplay />
             <AnswerInput />
-            <NextButton />
             <TenseExplanation />
             <ScoreDisplay />
           </>
         )}
 
         {/* Footer with reset button */}
-        <div className="mt-12 border-t pt-4 flex flex-col items-center">
+        <div className="mt-12 flex flex-col items-center border-t pt-4">
           <Button variant="destructive" onClick={handleClearStorage}>
             Clear All Saved Data
           </Button>
 
-          <p className="mt-2 text-xs text-center text-muted-foreground">
+          <p className="text-muted-foreground mt-2 text-center text-xs">
             This will reset all settings and scores to default values.
           </p>
         </div>

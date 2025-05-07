@@ -63,14 +63,32 @@ export const N5Verbs: JapaneseVerb[] = [
     meaning: "to be, to exist (inanimate objects)",
     type: "irregular",
     irregularForms: new Map([
-      [{ tense: "present", polarity: "affirmative", formality: "plain" }, "ある"],
-      [{ tense: "present", polarity: "affirmative", formality: "polite" }, "あります"],
+      [
+        { tense: "present", polarity: "affirmative", formality: "plain" },
+        "ある",
+      ],
+      [
+        { tense: "present", polarity: "affirmative", formality: "polite" },
+        "あります",
+      ],
       [{ tense: "present", polarity: "negative", formality: "plain" }, "ない"],
-      [{ tense: "present", polarity: "negative", formality: "polite" }, "ありません"],
-      [{ tense: "past", polarity: "affirmative", formality: "plain" }, "あった"],
-      [{ tense: "past", polarity: "affirmative", formality: "polite" }, "ありました"],
+      [
+        { tense: "present", polarity: "negative", formality: "polite" },
+        "ありません",
+      ],
+      [
+        { tense: "past", polarity: "affirmative", formality: "plain" },
+        "あった",
+      ],
+      [
+        { tense: "past", polarity: "affirmative", formality: "polite" },
+        "ありました",
+      ],
       [{ tense: "past", polarity: "negative", formality: "plain" }, "なかった"],
-      [{ tense: "past", polarity: "negative", formality: "polite" }, "ありませんでした"]
+      [
+        { tense: "past", polarity: "negative", formality: "polite" },
+        "ありませんでした",
+      ],
     ]),
     regularPattern: "godan",
     transitivity: "intransitive",
@@ -329,14 +347,35 @@ export const N5Verbs: JapaneseVerb[] = [
     meaning: "to come",
     type: "irregular",
     irregularForms: new Map([
-      [{ tense: "present", polarity: "affirmative", formality: "plain" }, "くる"],
-      [{ tense: "present", polarity: "affirmative", formality: "polite" }, "きます"],
-      [{ tense: "present", polarity: "negative", formality: "plain" }, "くない"],
-      [{ tense: "present", polarity: "negative", formality: "polite" }, "きません"],
+      [
+        { tense: "present", polarity: "affirmative", formality: "plain" },
+        "くる",
+      ],
+      [
+        { tense: "present", polarity: "affirmative", formality: "polite" },
+        "きます",
+      ],
+      [
+        { tense: "present", polarity: "negative", formality: "plain" },
+        "くない",
+      ],
+      [
+        { tense: "present", polarity: "negative", formality: "polite" },
+        "きません",
+      ],
       [{ tense: "past", polarity: "affirmative", formality: "plain" }, "きた"],
-      [{ tense: "past", polarity: "affirmative", formality: "polite" }, "きました"],
-      [{ tense: "past", polarity: "negative", formality: "plain" }, "きなかった"],
-      [{ tense: "past", polarity: "negative", formality: "polite" }, "きませんでした"],
+      [
+        { tense: "past", polarity: "affirmative", formality: "polite" },
+        "きました",
+      ],
+      [
+        { tense: "past", polarity: "negative", formality: "plain" },
+        "きなかった",
+      ],
+      [
+        { tense: "past", polarity: "negative", formality: "polite" },
+        "きませんでした",
+      ],
     ]),
     regularPattern: "godan",
     transitivity: "intransitive",
@@ -443,14 +482,35 @@ export const N5Verbs: JapaneseVerb[] = [
     meaning: "to do",
     type: "irregular",
     irregularForms: new Map([
-      [{ tense: "present", polarity: "affirmative", formality: "plain" }, "する"],
-      [{ tense: "present", polarity: "affirmative", formality: "polite" }, "します"],
-      [{ tense: "present", polarity: "negative", formality: "plain" }, "しない"],
-      [{ tense: "present", polarity: "negative", formality: "polite" }, "しません"],
+      [
+        { tense: "present", polarity: "affirmative", formality: "plain" },
+        "する",
+      ],
+      [
+        { tense: "present", polarity: "affirmative", formality: "polite" },
+        "します",
+      ],
+      [
+        { tense: "present", polarity: "negative", formality: "plain" },
+        "しない",
+      ],
+      [
+        { tense: "present", polarity: "negative", formality: "polite" },
+        "しません",
+      ],
       [{ tense: "past", polarity: "affirmative", formality: "plain" }, "した"],
-      [{ tense: "past", polarity: "affirmative", formality: "polite" }, "しました"],
-      [{ tense: "past", polarity: "negative", formality: "plain" }, "しなかった"],
-      [{ tense: "past", polarity: "negative", formality: "polite" }, "しませんでした"]
+      [
+        { tense: "past", polarity: "affirmative", formality: "polite" },
+        "しました",
+      ],
+      [
+        { tense: "past", polarity: "negative", formality: "plain" },
+        "しなかった",
+      ],
+      [
+        { tense: "past", polarity: "negative", formality: "polite" },
+        "しませんでした",
+      ],
     ]),
     regularPattern: "godan",
     transitivity: "transitive",

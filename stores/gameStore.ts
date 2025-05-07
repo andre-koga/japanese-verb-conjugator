@@ -1,9 +1,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Formality, JLPTLevel, Polarity, Tense, ConjugationForm, GameState } from "@/lib/types";
+import type {
+  Formality,
+  JLPTLevel,
+  Polarity,
+  Tense,
+  ConjugationForm,
+  GameState,
+} from "@/lib/types";
 import { conjugate, checkAnswer } from "@/lib/conjugation";
 import { initialState } from "@/lib/config/gameConfig";
 import { allVerbs } from "@/lib/jlpt-verbs";
+import { toHiragana } from "hepburn";
 
 const useGameStore = create<GameState>()(
   persist(
@@ -59,11 +67,18 @@ const useGameStore = create<GameState>()(
         set({ enabledJLPTLevels: levels }),
 
       setShowOptionsMenu: (show: boolean) => set({ showOptionsMenu: show }),
-      toggleOptionsMenu: () => set((state) => ({ showOptionsMenu: !state.showOptionsMenu })),
+      toggleOptionsMenu: () =>
+        set((state) => ({ showOptionsMenu: !state.showOptionsMenu })),
 
       newQuestion: () => {
         // Get a random tense from the selected tenses
-        const { selectedTenses, selectedPolarities, selectedFormalities, enabledJLPTLevels, recentVerbs } = get();
+        const {
+          selectedTenses,
+          selectedPolarities,
+          selectedFormalities,
+          enabledJLPTLevels,
+          recentVerbs,
+        } = get();
 
         const randomTenseIndex = Math.floor(
           Math.random() * selectedTenses.length,
@@ -87,16 +102,19 @@ const useGameStore = create<GameState>()(
           tense: randomTense,
           polarity: randomPolarity,
           formality: randomFormality,
-          showOptionsMenu: false // Hide options when starting practice
+          showOptionsMenu: false, // Hide options when starting practice
         });
 
         // Get a random level from selected levels
-        const randomLevel = enabledJLPTLevels[Math.floor(Math.random() * enabledJLPTLevels.length)];
+        const randomLevel =
+          enabledJLPTLevels[
+          Math.floor(Math.random() * enabledJLPTLevels.length)
+          ];
         const levelVerbs = allVerbs[randomLevel];
 
         // Filter out recent verbs
         const availableVerbs = levelVerbs.filter(
-          (verb) => !recentVerbs.includes(verb.dictionary)
+          (verb) => !recentVerbs.includes(verb.dictionary),
         );
 
         // If all verbs have been used recently, clear the recent verbs list
@@ -119,7 +137,7 @@ const useGameStore = create<GameState>()(
           currentVerb: selectedVerb,
           isCorrect: false,
           showAnswer: false,
-          recentVerbs: newRecentVerbs
+          recentVerbs: newRecentVerbs,
         });
       },
 
@@ -129,10 +147,13 @@ const useGameStore = create<GameState>()(
 
         // Get the correct conjugation using the conjugator
         const form: ConjugationForm = { tense, polarity, formality };
-        const correctAnswer = conjugate(currentVerb, form);
+        const correctAnswerKana = conjugate(currentVerb, form)[1];
+
+        // Convert the input to hiragana before comparison
+        const convertedAnswer = toHiragana(answer);
 
         // Check if the answer is correct using the sophisticated check
-        const isCorrect = checkAnswer(correctAnswer, answer);
+        const isCorrect = checkAnswer(correctAnswerKana, convertedAnswer);
 
         set((state) => ({
           isCorrect,

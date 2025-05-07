@@ -14,7 +14,7 @@ export default function FormalitySelector() {
     // If not, add it to the selection
     if (selectedFormalities.includes(formality)) {
       setSelectedFormalities(
-        selectedFormalities.filter((f) => f !== formality)
+        selectedFormalities.filter((f) => f !== formality),
       );
     } else {
       setSelectedFormalities([...selectedFormalities, formality]);
@@ -49,7 +49,7 @@ export default function FormalitySelector() {
       </div>
 
       <TooltipProvider>
-        <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 gap-x-2 items-start mb-0">
+        <div className="mb-0 grid grid-cols-1 items-start space-y-2 gap-x-2 sm:grid-cols-2">
           {formalityOptions.map((option) => (
             <div key={option.id}>
               <div className="flex items-center space-x-2">
@@ -61,10 +61,10 @@ export default function FormalitySelector() {
                 <div className="flex items-center gap-2">
                   <Label
                     htmlFor={`formality-${option.id}`}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                    className="cursor-pointer text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {option.label}
-                    <span className="ml-1 text-xs text-muted-foreground">
+                    <span className="text-muted-foreground ml-1 text-xs">
                       {option.description}
                     </span>
                   </Label>
@@ -75,7 +75,7 @@ export default function FormalitySelector() {
         </div>
       </TooltipProvider>
 
-      <div className="text-xs text-muted-foreground">
+      <div className="text-muted-foreground text-xs">
         {selectedFormalities.length} of {formalityOptions.length} selected
       </div>
     </div>
