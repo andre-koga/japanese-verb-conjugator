@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import type { JLPTLevel } from "@/lib/types";
 import { JLPTColor } from "@/lib/utils";
+import { JLPTLevels } from "@/lib/selectorConfig";
 import {
   Tooltip,
   TooltipContent,
@@ -10,48 +11,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
-
-const JLPTLevels = [
-  {
-    id: "N5",
-    label: "N5",
-    difficulty: "Beginner",
-    vocabCount: "~800 words",
-    description:
-      "Basic Japanese knowledge, understanding simple conversations and text",
-  },
-  {
-    id: "N4",
-    label: "N4",
-    difficulty: "Basic",
-    vocabCount: "~1,500 words",
-    description: "Basic everyday conversations, simple reading comprehension",
-  },
-  {
-    id: "N3",
-    label: "N3",
-    difficulty: "Intermediate",
-    vocabCount: "~3,000 words",
-    description:
-      "Understanding of everyday Japanese, reading newspapers and magazines with basic vocabulary",
-  },
-  {
-    id: "N2",
-    label: "N2",
-    difficulty: "Pre-Advanced",
-    vocabCount: "~6,000 words",
-    description:
-      "Able to understand most Japanese used in everyday situations and in a variety of circumstances",
-  },
-  {
-    id: "N1",
-    label: "N1",
-    difficulty: "Advanced",
-    vocabCount: "~10,000 words",
-    description:
-      "Comprehensive understanding of Japanese in a wide range of situations",
-  },
-] as const;
 
 export default function JLPTLevelSelector() {
   const { enabledJLPTLevels, setEnabledJLPTLevels } = useGameStore();
@@ -69,10 +28,10 @@ export default function JLPTLevelSelector() {
 
   const toggleAllLevels = (select: boolean) => {
     if (select) {
-      setEnabledJLPTLevels(JLPTLevels.map((l: { id: JLPTLevel }) => l.id));
+      setEnabledJLPTLevels(JLPTLevels.map((l) => l.id));
     } else {
       // Keep at least one level selected
-      setEnabledJLPTLevels([JLPTLevels[0].id as JLPTLevel]);
+      setEnabledJLPTLevels([JLPTLevels[0].id]);
     }
   };
 
@@ -100,7 +59,7 @@ export default function JLPTLevelSelector() {
       <div className="flex flex-wrap gap-2">
         <TooltipProvider>
           {JLPTLevels.map((level) => {
-            const isActive = enabledJLPTLevels.includes(level.id as JLPTLevel);
+            const isActive = enabledJLPTLevels.includes(level.id);
 
             return (
               <Tooltip key={level.id}>
@@ -109,12 +68,10 @@ export default function JLPTLevelSelector() {
                     size="sm"
                     variant="outline"
                     className={
-                      isActive
-                        ? JLPTColor(level.id as JLPTLevel)
-                        : "bg-transparent"
+                      isActive ? JLPTColor(level.id) : "bg-transparent"
                     }
                     pressed={isActive}
-                    onClick={() => toggleLevel(level.id as JLPTLevel)}
+                    onClick={() => toggleLevel(level.id)}
                   >
                     <span className="flex items-center gap-1">
                       {level.label}
@@ -127,7 +84,6 @@ export default function JLPTLevelSelector() {
                 <TooltipContent className="max-w-[200px]" side="top">
                   <div className="space-y-1">
                     <p className="font-semibold">{level.difficulty}</p>
-                    <p className="text-xs">{level.vocabCount}</p>
                     <p className="text-xs">{level.description}</p>
                   </div>
                 </TooltipContent>

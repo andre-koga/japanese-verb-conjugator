@@ -10,6 +10,13 @@ type IrregularVerbForms = Partial<Record<ConjugationFormKey, string>>;
 
 export type JLPTLevel = "N5" | "N4" | "N3" | "N2" | "N1";
 
+export type JLPTLevelData = {
+  id: JLPTLevel;
+  label: string;
+  difficulty: "Beginner" | "Basic" | "Intermediate" | "Pre-Advanced" | "Advanced";
+  description: string;
+};
+
 export type VerbEnding =
   | "u"
   | "ku"
@@ -30,23 +37,23 @@ export type Formality = "plain" | "polite";
 // Create a discriminated union type for JapaneseVerb
 export type JapaneseVerb =
   | {
-      dictionary: string;
-      kana: string;
-      meaning: string;
-      type: VerbType;
-      ending: VerbEnding;
-      transitivity: Transitivity;
-    }
+    dictionary: string;
+    kana: string;
+    meaning: string;
+    type: VerbType;
+    ending: VerbEnding;
+    transitivity: Transitivity;
+  }
   | {
-      dictionary: string;
-      kana: string;
-      meaning: string;
-      type: "irregular";
-      irregularForms: IrregularVerbForms;
-      // Optional: specify which regular pattern to follow for non-specified forms
-      regularPattern: VerbType;
-      transitivity: Transitivity;
-    };
+    dictionary: string;
+    kana: string;
+    meaning: string;
+    type: "irregular";
+    irregularForms: IrregularVerbForms;
+    // Optional: specify which regular pattern to follow for non-specified forms
+    regularPattern: VerbType;
+    transitivity: Transitivity;
+  };
 
 export interface ConjugationRule {
   appliesTo: string[];
@@ -80,3 +87,9 @@ export type Tense =
   | "simultaneous"
   | "purposeGoing"
   | "purposeComing";
+
+export type TenseGroup = {
+  isEssential: boolean;
+  label: string;
+  description: string;
+};

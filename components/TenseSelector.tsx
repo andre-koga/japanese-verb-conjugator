@@ -11,6 +11,7 @@ import { Tense } from "@/lib/types";
 import { Label } from "@/components/ui/label";
 import { InfoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { essentialGroups } from "@/lib/selectorConfig";
 
 export default function TenseSelector() {
   const { selectedTenses, setSelectedTenses } = useGameStore();
@@ -30,20 +31,6 @@ export default function TenseSelector() {
     essential: tenseOptions.filter((tense) => tense.essential),
     nonEssential: tenseOptions.filter((tense) => !tense.essential),
   };
-
-  // Essential groups with descriptions
-  const essentialGroups = [
-    {
-      id: "essential",
-      label: "Essential Forms",
-      description: "Core grammar patterns for basic communication",
-    },
-    {
-      id: "nonEssential",
-      label: "Extended Forms",
-      description: "Additional patterns for nuanced expression",
-    },
-  ] as const;
 
   const selectAllTenses = () => {
     setSelectedTenses(tenseOptions.map((tense) => tense.id));
@@ -83,19 +70,30 @@ export default function TenseSelector() {
 
       <TooltipProvider>
         {essentialGroups.map((group) => (
-          <div key={group.id} className="space-y-2">
+          <div
+            key={group.isEssential ? "essential" : "nonEssential"}
+            className="space-y-2"
+          >
             <h3 className="text-sm font-medium flex items-center flex-wrap">
               {group.label}
               <Label className="text-xs opacity-70 font-normal ml-2">
                 {group.description}
               </Label>
               <span className="text-xs text-muted-foreground ml-2 hidden sm:block">
-                ({tensesByEssential[group.id].length} tenses)
+                (
+                {
+                  tensesByEssential[
+                    group.isEssential ? "essential" : "nonEssential"
+                  ].length
+                }{" "}
+                tenses)
               </span>
             </h3>
 
             <div className="space-y-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2">
-              {tensesByEssential[group.id].map((tense) => (
+              {tensesByEssential[
+                group.isEssential ? "essential" : "nonEssential"
+              ].map((tense) => (
                 <div key={tense.id}>
                   <div className="flex space-x-2">
                     <Checkbox
