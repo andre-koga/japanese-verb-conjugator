@@ -1,7 +1,7 @@
-import { Tense, Polarity, JLPTLevel, Formality } from "@/lib/types";
+import { Tense, Polarity, JLPTLevel, Formality, GameStateVariables } from "@/lib/types";
 
 // Initial state values to use for both initialization and reset
-export const initialState = {
+export const initialState: GameStateVariables = {
     selectedTenses: ["present" as Tense],
     tense: "present" as Tense,
     selectedPolarities: ["affirmative" as Polarity],
@@ -17,4 +17,5 @@ export const initialState = {
     score: 0,
     totalQuestions: 0,
     tenseStats: {},
+    recentVerbs: [],
 };

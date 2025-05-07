@@ -1,70 +1,45 @@
-import type { ConjugationRule, VerbEnding } from "../types";
-import { transformations } from "./transformations";
-import { getVerbStem } from "./basic";
+import type { ConjugationForm, ConjugationRule, JapaneseVerb } from "@/lib/types";
+import { getVerbStem } from "@/lib/conjugation";
 
-export const causativeRules: Record<string, ConjugationRule[]> = {
-  "causative-affirmative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "させる",
+export const causativeRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
+  [{
+    tense: "causative",
+    polarity: "affirmative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => {
+      const stem = getVerbStem(verb, "a");
+      return verb.type === "ichidan" ? stem + "させる" : stem + "せる";
     },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].a + "せる";
-      },
+  }]],
+  [{
+    tense: "causative",
+    polarity: "affirmative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => {
+      const stem = getVerbStem(verb, "a");
+      return verb.type === "ichidan" ? stem + "させます" : stem + "せます";
     },
-  ],
-  "causative-affirmative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "させます",
+  }]],
+  [{
+    tense: "causative",
+    polarity: "negative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => {
+      const stem = getVerbStem(verb, "a");
+      return verb.type === "ichidan" ? stem + "させない" : stem + "せない";
     },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].a + "せます";
-      },
+  }]],
+  [{
+    tense: "causative",
+    polarity: "negative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => {
+      const stem = getVerbStem(verb, "a");
+      return verb.type === "ichidan" ? stem + "させません" : stem + "せません";
     },
-  ],
-  "causative-negative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "させない",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].a + "せない";
-      },
-    },
-  ],
-  "causative-negative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "させません",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].a + "せません";
-      },
-    },
-  ],
-};
+  }]],
+]);

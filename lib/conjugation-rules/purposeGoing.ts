@@ -1,70 +1,33 @@
-import type { ConjugationRule, VerbEnding } from "../types";
-import { transformations } from "./transformations";
-import { getVerbStem } from "./basic";
+import type { ConjugationForm, ConjugationRule, JapaneseVerb } from "@/lib/types";
+import { getVerbStem } from "@/lib/conjugation";
 
-export const purposeGoingRules: Record<string, ConjugationRule[]> = {
-  "purposeGoing-affirmative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "に行く",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].i + "に行く";
-      },
-    },
-  ],
-  "purposeGoing-affirmative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "に行きます",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].i + "に行きます";
-      },
-    },
-  ],
-  "purposeGoing-negative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "に行かない",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].i + "に行かない";
-      },
-    },
-  ],
-  "purposeGoing-negative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "に行きません",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].i + "に行きません";
-      },
-    },
-  ],
-};
+export const purposeGoingRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
+  [{
+    tense: "purpose going",
+    polarity: "affirmative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "i") + "にいく",
+  }]],
+  [{
+    tense: "purpose going",
+    polarity: "affirmative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "i") + "にいきます",
+  }]],
+  [{
+    tense: "purpose going",
+    polarity: "negative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "i") + "にいかない",
+  }]],
+  [{
+    tense: "purpose going",
+    polarity: "negative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "i") + "にいきません",
+  }]],
+]);

@@ -1,42 +1,83 @@
-// Combine all rules into a single object
-import { basicRules } from "./basic";
-import { shouldRules } from "./should";
-import { mustRules } from "./must";
-import { attemptiveRules } from "./attemptive";
-import { preparatoryRules } from "./preparatory";
-import { regrettableRules } from "./regrettable";
-import { givingRules } from "./giving";
-import { receivingRules } from "./receiving";
-import { simultaneousRules } from "./simultaneous";
-import { purposeGoingRules } from "./purposeGoing";
-import { purposeComingRules } from "./purposeComing";
-import { causativeRules } from "./causative";
-import { conditionalRules } from "./conditional";
-import { desireRules } from "./desire";
-import { imperativeRules } from "./imperative";
-import { passiveRules } from "./passive";
-import { potentialRules } from "./potential";
-import { progressiveRules } from "./progressive";
-import { volitionalRules } from "./volitional";
+// Combine all rules into a single Map
+import { basicRules } from "@/lib/conjugation-rules/basic";
+import { shouldRules } from "@/lib/conjugation-rules/should";
+import { mustRules } from "@/lib/conjugation-rules/must";
+import { attemptiveRules } from "@/lib/conjugation-rules/attemptive";
+import { preparatoryRules } from "@/lib/conjugation-rules/preparatory";
+import { regrettableRules } from "@/lib/conjugation-rules/regrettable";
+import { givingRules } from "@/lib/conjugation-rules/giving";
+import { receivingRules } from "@/lib/conjugation-rules/receiving";
+import { simultaneousRules } from "@/lib/conjugation-rules/simultaneous";
+import { purposeGoingRules } from "@/lib/conjugation-rules/purposeGoing";
+import { purposeComingRules } from "@/lib/conjugation-rules/purposeComing";
+import { causativeRules } from "@/lib/conjugation-rules/causative";
+import { conditionalRules } from "@/lib/conjugation-rules/conditional";
+import { desireRules } from "@/lib/conjugation-rules/desire";
+import { imperativeRules } from "@/lib/conjugation-rules/imperative";
+import { passiveRules } from "@/lib/conjugation-rules/passive";
+import { potentialRules } from "@/lib/conjugation-rules/potential";
+import { progressiveRules } from "@/lib/conjugation-rules/progressive";
+import { volitionalRules } from "@/lib/conjugation-rules/volitional";
+import type { ConjugationForm, ConjugationRule } from "@/lib/types";
 
-export const allRules = {
-  ...basicRules,
-  ...shouldRules,
-  ...mustRules,
-  ...attemptiveRules,
-  ...preparatoryRules,
-  ...regrettableRules,
-  ...givingRules,
-  ...receivingRules,
-  ...simultaneousRules,
-  ...purposeGoingRules,
-  ...purposeComingRules,
-  ...causativeRules,
-  ...conditionalRules,
-  ...desireRules,
-  ...imperativeRules,
-  ...passiveRules,
-  ...potentialRules,
-  ...progressiveRules,
-  ...volitionalRules,
-};
+// Create a new Map to store all rules
+export const allRules = new Map<ConjugationForm, ConjugationRule[]>();
+
+// Add rules from each module to the Map
+for (const [form, rules] of basicRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of shouldRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of mustRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of attemptiveRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of preparatoryRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of regrettableRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of givingRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of receivingRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of simultaneousRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of purposeGoingRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of purposeComingRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of causativeRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of conditionalRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of desireRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of imperativeRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of passiveRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of potentialRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of progressiveRules) {
+  allRules.set(form, rules);
+}
+for (const [form, rules] of volitionalRules) {
+  allRules.set(form, rules);
+}

@@ -1,4 +1,4 @@
-import type { VerbEnding, SoundChange } from "../types";
+import type { VerbEnding, SoundChange } from "@/lib/types";
 
 export const transformations = {
   godan: {

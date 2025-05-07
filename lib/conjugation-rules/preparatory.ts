@@ -1,70 +1,33 @@
-import type { ConjugationRule, VerbEnding } from "../types";
-import { transformations } from "./transformations";
-import { getVerbStem } from "./basic";
+import type { ConjugationForm, ConjugationRule, JapaneseVerb } from "@/lib/types";
+import { getVerbStem } from "@/lib/conjugation";
 
-export const preparatoryRules: Record<string, ConjugationRule[]> = {
-  "preparatory-affirmative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ておく",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].te + "おく";
-      },
-    },
-  ],
-  "preparatory-affirmative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ておきます",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].te + "おきます";
-      },
-    },
-  ],
-  "preparatory-negative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ておかない",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].te + "おかない";
-      },
-    },
-  ],
-  "preparatory-negative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ておきません",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].te + "おきません";
-      },
-    },
-  ],
-};
+export const preparatoryRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
+  [{
+    tense: "preparatory",
+    polarity: "affirmative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "te") + "おく",
+  }]],
+  [{
+    tense: "preparatory",
+    polarity: "affirmative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "te") + "おきます",
+  }]],
+  [{
+    tense: "preparatory",
+    polarity: "negative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "te") + "おかない",
+  }]],
+  [{
+    tense: "preparatory",
+    polarity: "negative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "te") + "おきません",
+  }]],
+]);

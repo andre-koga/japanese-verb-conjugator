@@ -1,70 +1,45 @@
-import type { ConjugationRule, VerbEnding } from "../types";
-import { transformations } from "./transformations";
-import { getVerbStem } from "./basic";
+import type { ConjugationForm, ConjugationRule, JapaneseVerb } from "@/lib/types";
+import { getVerbStem } from "@/lib/conjugation";
 
-export const potentialRules: Record<string, ConjugationRule[]> = {
-  "potential-affirmative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "られる",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].e + "る";
-      },
-    },
-  ],
-  "potential-affirmative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "られます",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].e + "ます";
-      },
-    },
-  ],
-  "potential-negative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "られない",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].e + "ない";
-      },
-    },
-  ],
-  "potential-negative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "られません",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type === "irregular") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending as VerbEnding;
-        return stem + transformations.godan.endings[ending].e + "ません";
-      },
-    },
-  ],
-};
+export const potentialRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
+  [{
+    tense: "potential",
+    polarity: "affirmative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) =>
+      verb.type === "ichidan"
+        ? getVerbStem(verb, "i") + "られる"
+        : getVerbStem(verb, "e") + "る",
+  }]],
+  [{
+    tense: "potential",
+    polarity: "affirmative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) =>
+      verb.type === "ichidan"
+        ? getVerbStem(verb, "i") + "られます"
+        : getVerbStem(verb, "e") + "ます",
+  }]],
+  [{
+    tense: "potential",
+    polarity: "negative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) =>
+      verb.type === "ichidan"
+        ? getVerbStem(verb, "i") + "られない"
+        : getVerbStem(verb, "e") + "ない",
+  }]],
+  [{
+    tense: "potential",
+    polarity: "negative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) =>
+      verb.type === "ichidan"
+        ? getVerbStem(verb, "i") + "られません"
+        : getVerbStem(verb, "e") + "ません",
+  }]],
+]);

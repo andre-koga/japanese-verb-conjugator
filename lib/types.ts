@@ -2,11 +2,17 @@ type VerbType = "godan" | "ichidan";
 
 type Transitivity = "transitive" | "intransitive";
 
-// Create a type that represents all possible conjugation form keys
-type ConjugationFormKey = `${Tense}-${Polarity}-${Formality}`;
+// Create a type for the conjugation form
+export type ConjugationForm = {
+  tense: Tense;
+  polarity: Polarity;
+  formality: Formality;
+};
 
 // Create a type for irregular verb forms that only requires exceptions
-type IrregularVerbForms = Partial<Record<ConjugationFormKey, string>>;
+type IrregularVerbForms = Map<ConjugationForm, string>;
+
+export type GodanVowel = "a" | "i" | "u" | "e" | "o" | "te" | "ta";
 
 export type JLPTLevel = "N5" | "N4" | "N3" | "N2" | "N1";
 
@@ -41,8 +47,8 @@ export type JapaneseVerb =
     kana: string;
     meaning: string;
     type: VerbType;
-    ending: VerbEnding;
-    transitivity: Transitivity;
+    transitivity?: Transitivity;
+    JLPTLevel?: JLPTLevel;
   }
   | {
     dictionary: string;
@@ -50,13 +56,12 @@ export type JapaneseVerb =
     meaning: string;
     type: "irregular";
     irregularForms: IrregularVerbForms;
-    // Optional: specify which regular pattern to follow for non-specified forms
     regularPattern: VerbType;
-    transitivity: Transitivity;
+    transitivity?: Transitivity;
+    JLPTLevel?: JLPTLevel;
   };
 
 export interface ConjugationRule {
-  appliesTo: string[];
   transform: (verb: JapaneseVerb) => string;
 }
 
@@ -93,3 +98,45 @@ export type TenseGroup = {
   label: string;
   description: string;
 };
+
+export interface TenseStats {
+  correct: number;
+  total: number;
+}
+
+export interface GameStateVariables {
+  selectedTenses: Tense[];
+  tense: Tense;
+  selectedPolarities: Polarity[];
+  polarity: Polarity;
+  selectedFormalities: Formality[];
+  formality: Formality;
+  JLPTLevel: JLPTLevel;
+  enabledJLPTLevels: JLPTLevel[];
+  showOptionsMenu: boolean;
+  currentVerb: JapaneseVerb | null;
+  isCorrect: boolean;
+  showAnswer: boolean;
+  score: number;
+  totalQuestions: number;
+  tenseStats: Record<string, TenseStats>;
+  recentVerbs: string[];
+}
+
+export interface GameState extends GameStateVariables {
+  // Actions
+  setSelectedTenses: (tenses: Tense[]) => void;
+  setTense: (tense: Tense) => void;
+  setSelectedPolarities: (polarities: Polarity[]) => void;
+  setPolarity: (polarity: Polarity) => void;
+  setSelectedFormalities: (formalities: Formality[]) => void;
+  setFormality: (formality: Formality) => void;
+  setJLPTLevel: (level: JLPTLevel) => void;
+  setEnabledJLPTLevels: (levels: JLPTLevel[]) => void;
+  setShowOptionsMenu: (show: boolean) => void; // Set options visibility
+  toggleOptionsMenu: () => void; // Toggle options visibility
+  newQuestion: () => void;
+  checkAnswer: (answer: string) => void;
+  resetGame: () => void;
+  clearStorage: () => void; // Clear all storage and reset to defaults
+}

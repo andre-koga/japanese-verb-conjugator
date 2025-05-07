@@ -5,18 +5,28 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { JLPTColor } from "@/lib/utils";
+import { conjugate } from "@/lib/conjugation";
 
 export default function VerbDisplay() {
-  const { currentVerb, tense, polarity, formality } = useGameStore();
+  const { currentVerb, tense, polarity, formality, showAnswer, isCorrect } =
+    useGameStore();
 
   if (!currentVerb) return null;
+
+  const correctAnswer =
+    showAnswer && !isCorrect
+      ? conjugate(currentVerb, { tense, polarity, formality })
+      : null;
 
   return (
     <Card>
       <CardContent className="text-center space-y-6">
         {/* Verb Information */}
         <div className="space-y-2">
-          <h2 className="text-xl font-bold">{currentVerb.dictionaryForm}</h2>
+          <p className="text-xs text-muted-foreground p-0 m-0">
+            {currentVerb.kana}
+          </p>
+          <h2 className="text-xl font-bold">{currentVerb.dictionary} </h2>
           <p>{currentVerb.meaning}</p>
 
           <div className="flex justify-center gap-2">
@@ -63,9 +73,17 @@ export default function VerbDisplay() {
           </div>
         </div>
 
+        {/* Correct Answer Display */}
+        {correctAnswer && (
+          <div className="text-destructive">
+            <p className="text-sm text-muted-foreground">Correct Answer:</p>
+            <p className="text-lg font-medium">{correctAnswer}</p>
+          </div>
+        )}
+
         {/* Jisho Lookup Button */}
         <Link
-          href={`https://jisho.org/search/${currentVerb.dictionaryForm}`}
+          href={`https://jisho.org/search/${currentVerb.dictionary}`}
           target="_blank"
           rel="noopener noreferrer"
           title="Look up on Jisho.org"

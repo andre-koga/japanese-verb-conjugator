@@ -1,57 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Formality, JLPTLevel, Polarity, Tense } from "@/lib/types";
-import { conjugator } from "@/lib/conjugation";
+import type { Formality, JLPTLevel, Polarity, Tense, ConjugationForm, GameState } from "@/lib/types";
+import { conjugate, checkAnswer } from "@/lib/conjugation";
 import { initialState } from "@/lib/config/gameConfig";
-
-interface Verb {
-  dictionaryForm: string;
-  meaning: string;
-  type: "ichidan" | "godan" | "irregular";
-  JLPTLevel: "N5" | "N4" | "N3" | "N2" | "N1";
-}
-
-interface TenseStats {
-  correct: number;
-  total: number;
-}
-
-interface GameState {
-  // Game settings
-  selectedTenses: Tense[]; // Multiple tense selection
-  tense: Tense; // Current active tense
-  selectedPolarities: Polarity[]; // Multiple polarity selection
-  polarity: Polarity; // Current active polarity
-  selectedFormalities: Formality[]; // Multiple formality selection
-  formality: Formality; // Current active formality
-  JLPTLevel: JLPTLevel;
-  enabledJLPTLevels: JLPTLevel[];
-  showOptionsMenu: boolean; // Track if options menu is visible
-
-  // Game state
-  currentVerb: Verb | null;
-  isCorrect: boolean;
-  showAnswer: boolean;
-  score: number;
-  totalQuestions: number;
-  tenseStats: Record<string, TenseStats>;
-
-  // Actions
-  setSelectedTenses: (tenses: Tense[]) => void;
-  setTense: (tense: Tense) => void;
-  setSelectedPolarities: (polarities: Polarity[]) => void;
-  setPolarity: (polarity: Polarity) => void;
-  setSelectedFormalities: (formalities: Formality[]) => void;
-  setFormality: (formality: Formality) => void;
-  setJLPTLevel: (level: JLPTLevel) => void;
-  setEnabledJLPTLevels: (levels: JLPTLevel[]) => void;
-  setShowOptionsMenu: (show: boolean) => void; // Set options visibility
-  toggleOptionsMenu: () => void; // Toggle options visibility
-  newQuestion: () => void;
-  checkAnswer: (answer: string) => void;
-  resetGame: () => void;
-  clearStorage: () => void; // Clear all storage and reset to defaults
-}
+import { allVerbs } from "@/lib/jlpt-verbs";
 
 const useGameStore = create<GameState>()(
   persist(
@@ -111,7 +63,7 @@ const useGameStore = create<GameState>()(
 
       newQuestion: () => {
         // Get a random tense from the selected tenses
-        const { selectedTenses, selectedPolarities, selectedFormalities } = get();
+        const { selectedTenses, selectedPolarities, selectedFormalities, enabledJLPTLevels, recentVerbs } = get();
 
         const randomTenseIndex = Math.floor(
           Math.random() * selectedTenses.length,
@@ -138,18 +90,36 @@ const useGameStore = create<GameState>()(
           showOptionsMenu: false // Hide options when starting practice
         });
 
-        // Get random verb from the conjugator
-        const randomVerb = conjugator.getRandomVerb();
+        // Get a random level from selected levels
+        const randomLevel = enabledJLPTLevels[Math.floor(Math.random() * enabledJLPTLevels.length)];
+        const levelVerbs = allVerbs[randomLevel];
+
+        // Filter out recent verbs
+        const availableVerbs = levelVerbs.filter(
+          (verb) => !recentVerbs.includes(verb.dictionary)
+        );
+
+        // If all verbs have been used recently, clear the recent verbs list
+        if (availableVerbs.length === 0) {
+          set({ recentVerbs: [] });
+          return get().newQuestion();
+        }
+
+        // Get a random verb from available verbs
+        const randomIndex = Math.floor(Math.random() * availableVerbs.length);
+        const selectedVerb = availableVerbs[randomIndex];
+
+        // Add to recent verbs and maintain size limit
+        const newRecentVerbs = [...recentVerbs, selectedVerb.dictionary];
+        if (newRecentVerbs.length > 10) {
+          newRecentVerbs.shift();
+        }
 
         set({
-          currentVerb: {
-            dictionaryForm: randomVerb.dictionary,
-            meaning: randomVerb.meaning,
-            type: randomVerb.type,
-            JLPTLevel: "N5", // This could be updated with the actual JLPT level
-          },
+          currentVerb: selectedVerb,
           isCorrect: false,
           showAnswer: false,
+          recentVerbs: newRecentVerbs
         });
       },
 
@@ -157,15 +127,12 @@ const useGameStore = create<GameState>()(
         const { currentVerb, tense, polarity, formality } = get();
         if (!currentVerb) return;
 
-        // Find the verb in the conjugator
-        const verbObj = conjugator.findVerb(currentVerb.dictionaryForm);
-        if (!verbObj) return;
+        // Get the correct conjugation using the conjugator
+        const form: ConjugationForm = { tense, polarity, formality };
+        const correctAnswer = conjugate(currentVerb, form);
 
-        // Get the correct conjugation
-        const correctAnswer = conjugator.conjugate(verbObj, tense, polarity, formality);
-
-        // Check if the answer is correct
-        const isCorrect = answer.trim() === correctAnswer.trim();
+        // Check if the answer is correct using the sophisticated check
+        const isCorrect = checkAnswer(correctAnswer, answer);
 
         set((state) => ({
           isCorrect,
@@ -193,6 +160,7 @@ const useGameStore = create<GameState>()(
           isCorrect: false,
           showAnswer: false,
           showOptionsMenu: true, // Show options when resetting
+          recentVerbs: [], // Clear recent verbs
         }),
 
       clearStorage: () => {

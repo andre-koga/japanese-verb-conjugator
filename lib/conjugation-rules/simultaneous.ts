@@ -1,70 +1,33 @@
-import type { ConjugationRule } from "../types";
-import { transformations } from "./transformations";
-import { getVerbStem } from "./basic";
+import type { ConjugationForm, ConjugationRule, JapaneseVerb } from "@/lib/types";
+import { getVerbStem } from "@/lib/conjugation";
 
-export const simultaneousRules: Record<string, ConjugationRule[]> = {
-  "simultaneous-affirmative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ながら",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type !== "godan") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending;
-        return stem + transformations.godan.endings[ending].a + "ながら";
-      },
-    },
-  ],
-  "simultaneous-affirmative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ながら",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type !== "godan") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending;
-        return stem + transformations.godan.endings[ending].a + "ながら";
-      },
-    },
-  ],
-  "simultaneous-negative-plain": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ないながら",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type !== "godan") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending;
-        return stem + transformations.godan.endings[ending].a + "ないながら";
-      },
-    },
-  ],
-  "simultaneous-negative-polite": [
-    {
-      appliesTo: ["ichidan"],
-      transform: (verb) => getVerbStem(verb, "ichidan") + "ませんながら",
-    },
-    {
-      appliesTo: ["godan"],
-      transform: (verb) => {
-        if (verb.type !== "godan") return verb.dictionary;
-        if (!verb.ending) return verb.dictionary;
-        const stem = getVerbStem(verb, "godan");
-        const ending = verb.ending;
-        return stem + transformations.godan.endings[ending].a + "ませんながら";
-      },
-    },
-  ],
-};
+export const simultaneousRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
+  [{
+    tense: "simultaneous",
+    polarity: "affirmative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "a") + "ながら",
+  }]],
+  [{
+    tense: "simultaneous",
+    polarity: "affirmative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "a") + "ながら",
+  }]],
+  [{
+    tense: "simultaneous",
+    polarity: "negative",
+    formality: "plain"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "a") + "ないながら",
+  }]],
+  [{
+    tense: "simultaneous",
+    polarity: "negative",
+    formality: "polite"
+  }, [{
+    transform: (verb: JapaneseVerb) => getVerbStem(verb, "a") + "ませんながら",
+  }]],
+]);

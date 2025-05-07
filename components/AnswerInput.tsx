@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { useGameStore } from "@/stores/gameStore";
 import { Input } from "@/components/ui/input";
 import { romajiToJapanese } from "@/lib/romaji";
+import { cn } from "@/lib/utils";
 
 export default function AnswerInput() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,7 +28,10 @@ export default function AnswerInput() {
       <Input
         ref={inputRef}
         type="text"
-        className="w-full rounded-md border p-2 text-lg text-center"
+        className={cn(
+          "w-full rounded-md border p-2 text-lg text-center",
+          showAnswer && (isCorrect ? "border-primary" : "border-destructive")
+        )}
         placeholder="Type your answer here..."
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
