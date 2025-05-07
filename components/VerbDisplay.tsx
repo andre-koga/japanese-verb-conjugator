@@ -30,9 +30,6 @@ export default function VerbDisplay() {
           <p>{currentVerb.meaning}</p>
 
           <div className="flex justify-center gap-2">
-            <Badge variant="secondary" className="text-muted-foreground">
-              {currentVerb.type.toUpperCase()}
-            </Badge>
             {currentVerb.JLPTLevel && (
               <Badge
                 className={`${JLPTColor(currentVerb.JLPTLevel)} text-primary`}
@@ -40,6 +37,12 @@ export default function VerbDisplay() {
                 {currentVerb.JLPTLevel}
               </Badge>
             )}
+            <Badge variant="secondary" className="text-muted-foreground border border-muted-foreground/50">
+              {currentVerb.type === "godan" ? "五段" : "一段"}
+            </Badge>
+            <Badge variant="secondary" className="text-muted-foreground border border-muted-foreground/50">
+              {currentVerb.transitivity === "transitive" ? "他動詞" : "自動詞"}
+            </Badge>
           </div>
         </div>
 

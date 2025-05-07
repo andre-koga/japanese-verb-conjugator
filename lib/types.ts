@@ -20,11 +20,11 @@ export type JLPTLevelData = {
   id: JLPTLevel;
   label: string;
   difficulty:
-    | "Beginner"
-    | "Basic"
-    | "Intermediate"
-    | "Pre-Advanced"
-    | "Advanced";
+  | "Beginner"
+  | "Basic"
+  | "Intermediate"
+  | "Pre-Advanced"
+  | "Advanced";
   description: string;
 };
 
@@ -46,23 +46,23 @@ export type Formality = "plain" | "polite";
 // Create a discriminated union type for JapaneseVerb
 export type JapaneseVerb =
   | {
-      dictionary: string;
-      kana: string;
-      meaning: string;
-      type: VerbType;
-      transitivity?: Transitivity;
-      JLPTLevel?: JLPTLevel;
-    }
+    dictionary: string;
+    kana: string;
+    meaning: string;
+    type: VerbType;
+    transitivity: Transitivity;
+    JLPTLevel?: JLPTLevel;
+  }
   | {
-      dictionary: string;
-      kana: string;
-      meaning: string;
-      type: "irregular";
-      irregularForms: IrregularVerbForms;
-      regularPattern: VerbType;
-      transitivity?: Transitivity;
-      JLPTLevel?: JLPTLevel;
-    };
+    dictionary: string;
+    kana: string;
+    meaning: string;
+    type: "irregular";
+    irregularForms: IrregularVerbForms;
+    regularPattern: VerbType;
+    transitivity: Transitivity;
+    JLPTLevel?: JLPTLevel;
+  };
 
 export interface ConjugationRule {
   transform: (verb: JapaneseVerb) => [string, string];
