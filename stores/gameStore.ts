@@ -14,6 +14,30 @@ import { allVerbs } from "@/lib/jlpt-verbs";
 import { toHiragana } from "hepburn";
 import { tenseOptions } from "@/lib/verbOptions";
 
+// Helper function to check if the current selection is valid
+const isValidSelection = (
+  selectedTenses: Tense[],
+  selectedPolarities: Polarity[],
+  selectedFormalities: Formality[]
+): boolean => {
+  // If any tense other than present indicative is selected, it's valid
+  if (selectedTenses.some(tense => tense !== "present indicative")) {
+    return true;
+  }
+
+  // If present indicative is the only tense, check polarity and formality
+  // If either polarity or formality has options other than affirmative/plain, it's valid
+  if (selectedPolarities.some(p => p !== "affirmative")) {
+    return true;
+  }
+  if (selectedFormalities.some(f => f !== "plain")) {
+    return true;
+  }
+
+  // If we have only present indicative + affirmative + plain, it's invalid
+  return false;
+};
+
 const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
@@ -73,8 +97,13 @@ const useGameStore = create<GameState>()(
 
       setCurrentAnswer: (answer: string) => set({ currentAnswer: answer }),
 
+      // Add a function to check if the current selection is valid
+      isSelectionValid: () => {
+        const { selectedTenses, selectedPolarities, selectedFormalities } = get();
+        return isValidSelection(selectedTenses, selectedPolarities, selectedFormalities);
+      },
+
       newQuestion: () => {
-        // Get a random tense from the selected tenses
         const {
           selectedTenses,
           selectedPolarities,
@@ -83,7 +112,12 @@ const useGameStore = create<GameState>()(
           recentVerbs,
         } = get();
 
-        // Filter out any invalid tenses
+        // Check if the current selection is valid
+        if (!isValidSelection(selectedTenses, selectedPolarities, selectedFormalities)) {
+          return; // Don't proceed if the selection is invalid
+        }
+
+        // Get a random tense from the selected tenses
         const validTenses = selectedTenses.filter(tense =>
           tenseOptions.some(option => option.id === tense)
         );
@@ -119,7 +153,7 @@ const useGameStore = create<GameState>()(
             randomPolarity = randomCombination.polarity;
             randomFormality = randomCombination.formality;
           } else {
-            // If no specific combinations are defined, randomly select from available options
+            // Randomly select from available options
             const randomPolarityIndex = Math.floor(
               Math.random() * selectedPolarities.length,
             );

@@ -4,6 +4,7 @@ import { Toggle } from "@/components/ui/toggle";
 import type { JLPTLevel } from "@/lib/types";
 import { JLPTColor } from "@/lib/utils";
 import { JLPTLevels } from "@/lib/config/selectorConst";
+import { allVerbs } from "@/lib/jlpt-verbs";
 import {
   Tooltip,
   TooltipContent,
@@ -85,6 +86,9 @@ export default function JLPTLevelSelector() {
                   <div className="space-y-1">
                     <p className="font-semibold">{level.difficulty}</p>
                     <p className="text-xs">{level.description}</p>
+                    <p className="text-muted-foreground text-xs">
+                      {allVerbs[level.id].length} verbs available
+                    </p>
                   </div>
                 </TooltipContent>
               </Tooltip>

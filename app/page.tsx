@@ -14,6 +14,12 @@ import ScoreDisplay from "@/components/ScoreDisplay";
 import { useGameStore } from "@/stores/gameStore";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Home() {
   const {
@@ -23,6 +29,7 @@ export default function Home() {
     toggleOptionsMenu,
     setShowOptionsMenu,
     clearStorage,
+    isSelectionValid,
   } = useGameStore();
 
   // Determine if practice has content to display
@@ -70,28 +77,48 @@ export default function Home() {
             </>
           )}
 
-          <Button
-            className="w-full rounded"
-            variant="default"
-            onClick={() => {
-              if (!hasPracticeContent) {
-                // Start practice if not already started
-                newQuestion();
-              } else if (showOptionsMenu) {
-                // Hide options and continue practice
-                setShowOptionsMenu(false);
-              } else {
-                // Show options
-                toggleOptionsMenu();
-              }
-            }}
-          >
-            {!hasPracticeContent
-              ? "Start Practice"
-              : showOptionsMenu
-                ? "Continue Practice"
-                : "Go Back"}
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div>
+                  <Button
+                    className="w-full rounded"
+                    variant="default"
+                    onClick={() => {
+                      if (!hasPracticeContent) {
+                        // Start practice if not already started
+                        newQuestion();
+                      } else if (showOptionsMenu) {
+                        // Hide options and continue practice
+                        setShowOptionsMenu(false);
+                      } else {
+                        // Show options
+                        toggleOptionsMenu();
+                      }
+                    }}
+                    disabled={
+                      (!hasPracticeContent || showOptionsMenu) &&
+                      !isSelectionValid()
+                    }
+                  >
+                    {!hasPracticeContent
+                      ? "Start Practice"
+                      : showOptionsMenu
+                        ? "Continue Practice"
+                        : "Go Back"}
+                  </Button>
+                </div>
+              </TooltipTrigger>
+              {!hasPracticeContent && !isSelectionValid() && (
+                <TooltipContent>
+                  <p>
+                    Please select at least one tense other than present
+                    indicative, or change the polarity/formality settings.
+                  </p>
+                </TooltipContent>
+              )}
+            </Tooltip>
+          </TooltipProvider>
         </TabsContent>
 
         <TabsContent value="explanation">

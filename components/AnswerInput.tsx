@@ -63,8 +63,7 @@ export default function AnswerInput() {
             type="text"
             className={cn(
               "w-full rounded-md border p-2 text-center text-lg",
-              showAnswer &&
-                (isCorrect ? "border-correct" : "border-destructive"),
+              showAnswer && (isCorrect ? "border-correct" : "border-incorrect"),
             )}
             placeholder="Type your answer here..."
             value={currentAnswer}
@@ -90,11 +89,9 @@ export default function AnswerInput() {
             }}
             disabled={!canSubmit && !isCorrect && !showAnswer}
             className={cn(
-              "focus:!border-foreground/80 border-2 border-transparent px-6",
-              isCorrect && "bg-green-600 hover:bg-green-600/80",
-              !isCorrect &&
-                showAnswer &&
-                "bg-destructive hover:bg-destructive/80",
+              "focus:!border-foreground/60 border-2 border-transparent px-6",
+              isCorrect && "bg-correct hover:bg-correct/80",
+              !isCorrect && showAnswer && "bg-incorrect hover:bg-incorrect/80",
             )}
             tabIndex={0}
           >

@@ -89,7 +89,7 @@
   --secondary: var(--color-zinc-600);
   --secondary-foreground: var(--color-zinc-900);
   --muted: var(--color-zinc-700);
-  --muted-foreground: var(--color-zinc-400);
+  --muted-foreground: var(--color-zinc-500);
   --accent: var(--color-zinc-600);
   --accent-foreground: var(--color-zinc-300);
   --destructive: var(--color-red-600);
@@ -113,6 +113,7 @@
 
 /* Custom colors */
 :root {
+  --incorrect-color: var(--color-red-400);
   --correct-color: var(--color-green-400);
   --n5-color: var(--color-red-300);
   --n4-color: var(--color-blue-300);
@@ -122,6 +123,7 @@
 }
 .dark {
   --correct-color: var(--color-green-500);
+  --incorrect-color: var(--color-red-500);
   --n5-color: var(--color-red-700);
   --n4-color: var(--color-blue-700);
   --n3-color: var(--color-green-700);
@@ -131,6 +133,7 @@
 
 @theme inline {
   --color-correct: var(--correct-color);
+  --color-incorrect: var(--incorrect-color);
   --color-n5: var(--n5-color);
   --color-n4: var(--n4-color);
   --color-n3: var(--n3-color);

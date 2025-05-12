@@ -50,6 +50,11 @@ export const tenseOptions: TenseOption[] = [
     hasPolarity: true,
     longDescription:
       "The present tense (dictionary form) is used to express habitual actions, general truths, and future events. It's the base form of Japanese verbs.",
+    allowedCombinations: [
+      { polarity: "affirmative", formality: "polite" },
+      { polarity: "negative", formality: "plain" },
+      { polarity: "negative", formality: "polite" }
+    ],
   },
   {
     id: "te form",

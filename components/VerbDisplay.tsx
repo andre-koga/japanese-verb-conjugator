@@ -4,7 +4,7 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { JLPTColor } from "@/lib/utils";
+import { cn, JLPTColor } from "@/lib/utils";
 import { conjugate } from "@/lib/conjugation";
 import {
   Tooltip,
@@ -26,10 +26,9 @@ export default function VerbDisplay() {
 
   if (!currentVerb) return null;
 
-  const correctAnswer =
-    showAnswer && !isCorrect
-      ? conjugate(currentVerb, { tense, polarity, formality })
-      : null;
+  const correctAnswer = showAnswer
+    ? conjugate(currentVerb, { tense, polarity, formality })
+    : null;
 
   const currentTenseOption = tenseOptions.find((t) => t.id === tense);
 
@@ -168,9 +167,9 @@ export default function VerbDisplay() {
           </div>
         </div>
 
-        {/* Correct Answer Display */}
+        {/* Answer Display */}
         {correctAnswer && (
-          <div className="text-destructive">
+          <div className={cn(isCorrect ? "text-correct" : "text-incorrect")}>
             <p className="text-muted-foreground mb-4 text-sm">
               Correct Answer:
             </p>

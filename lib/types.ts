@@ -120,4 +120,5 @@ export interface GameState extends GameStateVariables {
   resetGame: () => void;
   clearStorage: () => void; // Clear all storage and reset to defaults
   setCurrentAnswer: (answer: string) => void;
+  isSelectionValid: () => boolean; // Check if current selection is valid
 }

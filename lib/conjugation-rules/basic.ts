@@ -68,7 +68,7 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
     [
       {
         transform: (verb: JapaneseVerb) =>
-          addVerbEnding(getVerbStem(verb, "ta"), "ました"),
+          addVerbEnding(getVerbStem(verb, "ta"), ""),
       },
     ],
   ],
