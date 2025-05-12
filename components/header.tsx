@@ -33,34 +33,34 @@ export default function Header() {
                 <Link href="/">Practice</Link>
               </Button>
               <Button
-                variant={isActive("/verb/n5") ? "default" : "ghost"}
+                variant={isActive("/jlpt/n5") ? "default" : "ghost"}
                 size="sm"
               >
-                <Link href="/verb/n5">N5</Link>
+                <Link href="/jlpt/n5">N5</Link>
               </Button>
               <Button
-                variant={isActive("/verb/n4") ? "default" : "ghost"}
+                variant={isActive("/jlpt/n4") ? "default" : "ghost"}
                 size="sm"
               >
-                <Link href="/verb/n4">N4</Link>
+                <Link href="/jlpt/n4">N4</Link>
               </Button>
               <Button
-                variant={isActive("/verb/n3") ? "default" : "ghost"}
+                variant={isActive("/jlpt/n3") ? "default" : "ghost"}
                 size="sm"
               >
-                <Link href="/verb/n3">N3</Link>
+                <Link href="/jlpt/n3">N3</Link>
               </Button>
               <Button
-                variant={isActive("/verb/n2") ? "default" : "ghost"}
+                variant={isActive("/jlpt/n2") ? "default" : "ghost"}
                 size="sm"
               >
-                <Link href="/verb/n2">N2</Link>
+                <Link href="/jlpt/n2">N2</Link>
               </Button>
               <Button
-                variant={isActive("/verb/n1") ? "default" : "ghost"}
+                variant={isActive("/jlpt/n1") ? "default" : "ghost"}
                 size="sm"
               >
-                <Link href="/verb/n1">N1</Link>
+                <Link href="/jlpt/n1">N1</Link>
               </Button>
               <div className="w-1" />
               <LightSwitch />
