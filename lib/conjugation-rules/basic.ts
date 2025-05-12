@@ -140,3 +140,5 @@ export const basicRules: Map<ConjugationForm, ConjugationRule[]> = new Map([
     ],
   ],
 ]);
+
+export const tenseExplanation = {}

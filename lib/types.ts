@@ -100,6 +100,7 @@ export interface GameStateVariables {
   polarityStats: Record<Polarity, { correct: number; total: number }>;
   formalityStats: Record<Formality, { correct: number; total: number }>;
   recentVerbs: JapaneseVerb[];
+  currentAnswer: string;
 }
 
 export interface GameState extends GameStateVariables {
@@ -118,4 +119,5 @@ export interface GameState extends GameStateVariables {
   checkAnswer: (answer: string) => void;
   resetGame: () => void;
   clearStorage: () => void; // Clear all storage and reset to defaults
+  setCurrentAnswer: (answer: string) => void;
 }

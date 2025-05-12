@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useGameStore } from "@/stores/gameStore";
 import { Input } from "@/components/ui/input";
 import { toHiragana } from "hepburn";
@@ -11,21 +11,20 @@ import { ArrowRight } from "lucide-react";
 export default function AnswerInput() {
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { currentVerb, checkAnswer, isCorrect, showAnswer, newQuestion } = useGameStore();
-  const [inputValue, setInputValue] = useState("");
-  const [hiraganaValue, setHiraganaValue] = useState("");
-  const [canSubmit, setCanSubmit] = useState(true);
+  const {
+    currentVerb,
+    checkAnswer,
+    isCorrect,
+    showAnswer,
+    newQuestion,
+    currentAnswer,
+    setCurrentAnswer,
+  } = useGameStore();
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, [currentVerb]);
-
-  useEffect(() => {
-    setInputValue("");
-    setHiraganaValue("");
-    setCanSubmit(true);
   }, [currentVerb]);
 
   useEffect(() => {
@@ -37,9 +36,8 @@ export default function AnswerInput() {
   }, [isCorrect, showAnswer]);
 
   const handleSubmit = () => {
-    if (canSubmit && !isCorrect && !showAnswer && inputValue.trim()) {
-      setInputValue(hiraganaValue);
-      checkAnswer(inputValue);
+    if (!isCorrect && !showAnswer && currentAnswer.trim()) {
+      checkAnswer(currentAnswer);
     } else if (isCorrect || showAnswer) {
       newQuestion();
     }
@@ -47,17 +45,14 @@ export default function AnswerInput() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInputValue(value);
-    
-    const converted = toHiragana(value);
-    setHiraganaValue(converted);
-
-    // Check if the input can be fully converted to hiragana
-    const hasNonHiragana = /[^ぁ-んー]/.test(converted);
-    setCanSubmit(!hasNonHiragana);
+    setCurrentAnswer(value);
   };
 
   if (!currentVerb) return null;
+
+  const hiraganaValue = toHiragana(currentAnswer);
+  const hasNonHiragana = /[^ぁ-んー]/.test(hiraganaValue);
+  const canSubmit = !hasNonHiragana && currentAnswer.trim();
 
   return (
     <div className="mb-6">
@@ -68,14 +63,15 @@ export default function AnswerInput() {
             type="text"
             className={cn(
               "w-full rounded-md border p-2 text-center text-lg",
-              showAnswer && (isCorrect ? "border-correct" : "border-destructive"),
+              showAnswer &&
+                (isCorrect ? "border-correct" : "border-destructive"),
             )}
             placeholder="Type your answer here..."
-            value={inputValue}
+            value={currentAnswer}
             onChange={handleInputChange}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                if (canSubmit && !isCorrect && !showAnswer && inputValue.trim()) {
+                if (canSubmit && !isCorrect && !showAnswer) {
                   handleSubmit();
                 } else if (isCorrect || showAnswer) {
                   handleSubmit();
@@ -92,11 +88,13 @@ export default function AnswerInput() {
                 handleSubmit();
               }
             }}
-            disabled={(!canSubmit || !inputValue.trim()) && !isCorrect && !showAnswer}
+            disabled={!canSubmit && !isCorrect && !showAnswer}
             className={cn(
-              "px-6 focus:!border-foreground/80 border-transparent border-2",
-              (isCorrect) && "bg-green-600 hover:bg-green-600/80",
-              (!isCorrect && showAnswer) && "bg-destructive hover:bg-destructive/80",
+              "focus:!border-foreground/80 border-2 border-transparent px-6",
+              isCorrect && "bg-green-600 hover:bg-green-600/80",
+              !isCorrect &&
+                showAnswer &&
+                "bg-destructive hover:bg-destructive/80",
             )}
             tabIndex={0}
           >
@@ -104,7 +102,7 @@ export default function AnswerInput() {
           </Button>
         </div>
         {hiraganaValue && !isCorrect && !showAnswer && (
-          <p className="text-sm text-muted-foreground text-center mt-2">
+          <p className="text-muted-foreground mt-2 text-center text-sm">
             {hiraganaValue}
           </p>
         )}

@@ -29,4 +29,5 @@ export const initialState: GameStateVariables = {
   polarityStats: {} as Record<Polarity, { correct: number; total: number }>,
   formalityStats: {} as Record<Formality, { correct: number; total: number }>,
   recentVerbs: [],
+  currentAnswer: "",
 };

@@ -1,25 +1,41 @@
 import { useGameStore } from "@/stores/gameStore";
+import {
+  tenseOptions,
+  polarityOptions,
+  formalityOptions,
+} from "@/lib/verbOptions";
 
-export default function TenseExplanation() {
-  const { tense, polarity, formality, showAnswer } = useGameStore();
+export default function ConjugationExplanation() {
+  const { tense, polarity, formality } = useGameStore();
 
-  if (!showAnswer) return null;
+  const tenseOption = tenseOptions.find((t) => t.id === tense);
+  const polarityOption = polarityOptions.find((p) => p.id === polarity);
+  const formalityOption = formalityOptions.find((f) => f.id === formality);
 
   return (
-    <div className="mb-6 rounded-lg border p-4">
-      <h3 className="mb-2 text-lg font-semibold">Conjugation Rules</h3>
-      <div className="space-y-2">
-        <p>
-          <span className="font-medium">Tense:</span> {tense}
-        </p>
-        <p>
-          <span className="font-medium">Polarity:</span> {polarity}
-        </p>
-        <p>
-          <span className="font-medium">Formality:</span> {formality}
-        </p>
-        {/* Add specific conjugation rules here based on the selected options */}
+    <div className="space-y-4">
+      <div className="rounded-lg border p-4">
+        <h3 className="mb-2 text-lg font-semibold">Tense</h3>
+        <p className="text-muted-foreground">{tenseOption?.longDescription}</p>
       </div>
+
+      {tenseOption?.hasPolarity && (
+        <div className="rounded-lg border p-4">
+          <h3 className="mb-2 text-lg font-semibold">Polarity</h3>
+          <p className="text-muted-foreground">
+            {polarityOption?.longDescription}
+          </p>
+        </div>
+      )}
+
+      {tenseOption?.hasFormality && (
+        <div className="rounded-lg border p-4">
+          <h3 className="mb-2 text-lg font-semibold">Formality</h3>
+          <p className="text-muted-foreground">
+            {formalityOption?.longDescription}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

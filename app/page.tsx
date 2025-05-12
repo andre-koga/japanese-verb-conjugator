@@ -9,7 +9,7 @@ import PolaritySelector from "@/components/PolaritySelector";
 import FormalitySelector from "@/components/FormalitySelector";
 import DictionaryFormAlert from "@/components/DictionaryFormAlert";
 import AnswerInput from "@/components/AnswerInput";
-import TenseExplanation from "@/components/TenseExplanation";
+import ConjugationExplanation from "@/components/TenseExplanation";
 import ScoreDisplay from "@/components/ScoreDisplay";
 import { useGameStore } from "@/stores/gameStore";
 import { toast } from "sonner";
@@ -41,8 +41,9 @@ export default function Home() {
       <PageTitle title="日本語動詞活用練習" subtitle="Conjugation Practice" />
 
       <Tabs defaultValue="practice" className="w-full space-y-4">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="practice">Practice</TabsTrigger>
+          <TabsTrigger value="explanation">Explanation</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
         </TabsList>
 
@@ -66,7 +67,6 @@ export default function Home() {
             <>
               <VerbDisplay />
               <AnswerInput />
-              <TenseExplanation />
             </>
           )}
 
@@ -92,6 +92,10 @@ export default function Home() {
                 ? "Continue Practice"
                 : "Go Back"}
           </Button>
+        </TabsContent>
+
+        <TabsContent value="explanation">
+          <ConjugationExplanation />
         </TabsContent>
 
         <TabsContent value="performance" className="space-y-8 rounded-lg">

@@ -71,6 +71,8 @@ const useGameStore = create<GameState>()(
       toggleOptionsMenu: () =>
         set((state) => ({ showOptionsMenu: !state.showOptionsMenu })),
 
+      setCurrentAnswer: (answer: string) => set({ currentAnswer: answer }),
+
       newQuestion: () => {
         // Get a random tense from the selected tenses
         const {
@@ -148,6 +150,7 @@ const useGameStore = create<GameState>()(
           polarity: randomPolarity,
           formality: randomFormality,
           showOptionsMenu: false, // Hide options when starting practice
+          currentAnswer: "", // Reset current answer
         });
 
         // Get a random level from selected levels
@@ -229,6 +232,7 @@ const useGameStore = create<GameState>()(
           showAnswer: false,
           showOptionsMenu: true, // Show options when resetting
           recentVerbs: [], // Clear recent verbs
+          currentAnswer: "", // Reset current answer
         }),
 
       clearStorage: () => {

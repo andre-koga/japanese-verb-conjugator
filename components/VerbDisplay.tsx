@@ -55,10 +55,7 @@ export default function VerbDisplay() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Badge
-                    variant="secondary"
-                    className="text-muted-foreground border-muted-foreground/50 border"
-                  >
+                  <Badge variant="outline">
                     {currentVerb.type === "godan" ? "五段" : "一段"}
                   </Badge>
                 </TooltipTrigger>
@@ -75,10 +72,7 @@ export default function VerbDisplay() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Badge
-                    variant="secondary"
-                    className="text-muted-foreground border-muted-foreground/50 border"
-                  >
+                  <Badge variant="outline">
                     {currentVerb.transitivity === "transitive"
                       ? "他動詞"
                       : "自動詞"}
