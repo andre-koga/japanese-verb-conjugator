@@ -36,7 +36,7 @@ export default function JLPTLevelPage({ params }: PageProps) {
 
   const verbs = getVerbsForLevel(level);
   const filteredVerbs = verbs
-    .sort((a, b) => a.dictionary.localeCompare(b.dictionary))
+    .sort((a, b) => a.kana.localeCompare(b.kana))
     .filter((verb) => {
       if (verbType !== "all" && verb.type !== verbType) return false;
       if (transitivity !== "all" && verb.transitivity !== transitivity)
