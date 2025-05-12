@@ -65,7 +65,7 @@ export function conjugate(
   form: ConjugationForm,
 ): [string, string] {
   // Handle irregular verbs with pre-defined forms
-  if (verb.type === "irregular") {
+  if (verb.irregularForms) {
     const formKey = getFormKey(form);
     if (verb.irregularForms && verb.irregularForms[formKey]) {
       return verb.irregularForms[formKey];

@@ -51,7 +51,7 @@ export interface JapaneseVerb {
   dictionary: string;
   kana: string;
   meaning: string;
-  type: "godan" | "ichidan" | "irregular";
+  type: "godan" | "ichidan";
   transitivity: "transitive" | "intransitive";
   JLPTLevel?: JLPTLevel;
   irregularForms?: Partial<Record<FormKey, [string, string]>>;
