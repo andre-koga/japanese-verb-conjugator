@@ -18,7 +18,9 @@ export function getVerbStem(
     godanVowel?: GodanVowel,
   ) => [string, string],
 ): [string, string] {
-  if (verb.type === "ichidan") {
+  if (verb.type === "irregular" && irregularStem) {
+    return irregularStem(verb, godanVowel);
+  } else if (verb.type === "ichidan") {
     const stem: [string, string] = [verb.dictionary.slice(0, -1), verb.kana.slice(0, -1)]; // Remove the final 'る'
     if (godanVowel === "te") {
       return [stem[0] + "て", stem[1] + "て"];
@@ -37,8 +39,6 @@ export function getVerbStem(
     const vowelChange = godanVowel as VowelChange;
     const newKana = getKanaForVowel(lastChar, vowelChange);
     return [base + newKana, kanaBase + newKana];
-  } else if (verb.type === "irregular" && irregularStem) {
-    return irregularStem(verb, godanVowel);
   }
 
   return [verb.dictionary, verb.kana]; // Default fallback
@@ -66,7 +66,7 @@ export function conjugate(
 ): [string, string] {
   // Handle irregular verbs with pre-defined forms
   if (verb.irregularForms) {
-    const formKey = getFormKey(form);
+    const formKey = getFormKey(form) as keyof typeof verb.irregularForms;
     if (verb.irregularForms && verb.irregularForms[formKey]) {
       return verb.irregularForms[formKey];
     }
