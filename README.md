@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 動詞形 (Doushikei) - Japanese Verb Conjugation Practice
+
+A NextJS and Tailwind CSS application for practicing Japanese verb conjugation. This app allows users to test their knowledge of different Japanese verb forms including tenses, polarity, and formality levels.
+
+## Features
+
+- Practice conjugating Japanese verbs in different forms:
+  - Tenses: present/non-past, past, te-form, potential, passive, causative, imperative, volitional
+  - Polarity: affirmative, negative
+  - Formality: plain (casual), polite (です/ます)
+- **Romaji input support**: Type your answers using the Latin alphabet, and they'll be automatically converted to Japanese characters
+- Real-time conversion preview shows how your romaji will be converted
+- Immediate feedback on your answers
+- Track your progress with a score system
+- Learn the correct conjugations for both ichidan and godan verbs
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v16 or later recommended)
+- pnpm package manager
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Start the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open your browser and navigate to `http://localhost:5173`
 
-## Learn More
+## How to Use
 
-To learn more about Next.js, take a look at the following resources:
+1. Select the tense, polarity, and formality level you want to practice
+2. Toggle the "Use Romaji Input" checkbox according to your preference:
+   - When enabled, you can type using the Latin alphabet (e.g., "tabemasu")
+   - The app will automatically convert your input to Japanese characters
+3. A random Japanese verb will be displayed with its meaning
+4. Type the correctly conjugated form in the input field
+5. Click "Check" to verify your answer
+6. If incorrect, you can click "Show Answer" to see the correct conjugation
+7. Click "Next Verb" to continue practicing with a new verb
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Romaji Conversion Examples
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- "tabemasu" → "たべます"
+- "nomimashita" → "のみました"
+- "ikimasu" → "いきます"
+- "kakimasen" → "かきません"
+- "tabeta" → "たべた"
+- "yomemasu" → "よめます"
 
-## Deploy on Vercel
+## Built With
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [SvelteKit](https://kit.svelte.dev/) - The web framework
+- [Tailwind CSS](https://tailwindcss.com/) - For styling
+- [TypeScript](https://www.typescriptlang.org/) - For type safety
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Future Enhancements
+
+- Add more verbs to the database
+- Support for compound conjugations (e.g., てしまう, ておく)
+- Practice modes (quiz, timed challenges)
+- User accounts to save progress
+- Pronunciation audio for verbs and their conjugations
+- Add explanations about conjugation rules
+
+## License
+
+This project is open source and available under the MIT License.
+
+---
+
+日本語動詞の活用を練習するためのアプリです。ローマ字で入力することもできます！ぜひ使ってみてください！
